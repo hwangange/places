@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Geolocation</title>
+  <title>Birdee</title>
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
   <meta charset="utf-8">
+  <link href='http://fonts.googleapis.com/css?family=Biryani:400,800,900|Nunito:400,700' rel='stylesheet' type='text/css'>
+  <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="css/extra.css" rel="stylesheet" media="screen">
   <style>
   html, body, #map-canvas {
     height: 100%;
@@ -11,10 +14,28 @@
     padding: 0;
   }
 
+  body {
+    background: #accbe8 url("/img/half-tree.png") no-repeat fixed right;
+  }
+
+  .center {
+    margin: auto;
+    width: 100%;
+  }
+
+  #info-header {
+    font-size: 1em;
+    margin-top: 0.67em;
+    margin-bottom: 0.67em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+  }
+
   </style>
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
 
   <script>
   // Note: This example requires that you consent to location sharing when
@@ -54,14 +75,6 @@
           radius: 1000,
           types: ['store']
         };*/
-
-        infowindow = new google.maps.InfoWindow({
-          map: map,
-          position: pos,
-          content: 'You are here.'
-        });
-
-        infowindow = new google.maps.InfoWindow();
         map.setCenter(pos);
         var marker=new google.maps.Marker({
           position:pos,
@@ -106,91 +119,112 @@
 
   </script>
 </head>
-<body>
-  <h1>Birdee</h1>
-  <h3>What are you looking for?</h3>
-  <select name="What are you looking for?" id="selected">
-    <option value="store">Store</option>
-    <option value="restaurant">Restaurant</option>
-    <option value="hotel">Hotel</option>
-    <option value="ATM">ATM</option>
-    <option value="bank">Bank</option>
-    <option value="bus station">Bus Station</option>
-    <option value="taxi">Taxi</option>
-    <option value="cafe">Cafe</option>
-    <option value="gas station">Gas Station</option>
-    <option value="salon">Salon</option>
-    <option value="boutique">Boutique</option>
-    <option value="bar">Bar</option>
-  </select>
-  <br><br>
-  <input type="submit" id="myBtn" value="Submit">
-  <p id="demo"></p>
-  <script>
-  </script>
-  <script>
-  var map;
-  var pos;
-  var infowindow;
-  function search(text) {
-    var mapOptions = {
-      zoom: 15
-    };
-    map = new google.maps.Map(document.getElementById('map-canvas'),
-    mapOptions);
-    if(navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position){
-        pos = new google.maps.LatLng(position.coords.latitude,
-          position.coords.longitude);
+<body bgcolor="#accbe8">
+  <div class="container">
+    <header class="page-header">
+      <h1><b>Birdee</b> <small><i>Know the town inside out!</i></small></h1>
+    </header>
+    <div class="dropdown center">
+      <h3><small>What are you looking for?</small></h3>
+      <select name="What are you looking for?" id="selected">
+        <option value="lodging">Lodging</option>
+        <option value="food">Food</option>
+        <option value="airport">Airport</option>
+        <option value="hotel">Hotel</option>
+        <option value="atm">ATM</option>
+        <option value="bank">Bank</option>
+        <option value="bus_station">Bus Station</option>
+        <option value="taxi_stand">Taxi</option>
+        <option value="train_stand">Train</option>
+        <option value="cafe">Cafe</option>
+        <option value="gas_station">Gas Station</option>
+        <option value="clothing_store">Clothing</option>
+      </select>
+      <input type="submit" id="myBtn" value="Submit" class="btn btn-success btn-sm">
+      <p id="demo"></p>
+    </div>
+    <br>
+
+    </div>
+      <script>
+      </script>
+      <script>
+      var map;
+      var pos;
+      var infowindow;
+      function search(text) {
+        var mapOptions = {
+          zoom: 15
+        };
+        map = new google.maps.Map(document.getElementById('map-canvas'),
+        mapOptions);
+        if(navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position){
+            pos = new google.maps.LatLng(position.coords.latitude,
+              position.coords.longitude);
+            }
+          );
+
+          var request = {
+            location: pos,
+            radius: 1000,
+            types: [String(text)]
+          };
+
+          infowindow = new google.maps.InfoWindow();
+          var service = new google.maps.places.PlacesService(map);
+          service.nearbySearch(request, callback);
         }
-      );
 
-      var request = {
-        location: pos,
-        radius: 1000,
-        types: [String(text)]
-      };
-
-      infowindow = new google.maps.InfoWindow();
-      var service = new google.maps.places.PlacesService(map);
-      service.nearbySearch(request, callback);
-    }
-
-    else {
-      handleNoGeolocation(false);
-    }
-  }
-
-  function createMarker(place) {
-    var placeLoc = place.geometry.location;
-    var marker = new google.maps.Marker({
-      map: map,
-      position: place.geometry.location
-    });
-    marker.setMap(map);
-
-    google.maps.event.addListener(marker, 'click', function() {
-      infowindow.setContent(place.name);
-      infowindow.open(map, this);
-    });
-  }
-
-  function callback(results, status) {
-    if (status == google.maps.places.PlacesServiceStatus.OK) {
-      for (var i = 0; i < results.length; i++) {
-        createMarker(results[i]);
+        else {
+          handleNoGeolocation(false);
+        }
       }
-    }
-  }
 
-  function loadScript() {
-    var script = document.createElement("script");
-    script.src = "http://maps.googleapis.com/maps/api/js?callback=initialize";
-    document.body.appendChild(script);
-  }
+      function createMarker(place) {
+        var placeLoc = place.geometry.location;
 
-  // window.onload = loadScript;
-  </script>
-  <div id="map-canvas"></div>
-</body>
-</html>
+        var image = {
+          url: place.icon,
+          size: new google.maps.Size(71, 71),
+          origin: new google.maps.Point(0, 0),
+          anchor: new google.maps.Point(17, 34),
+          scaledSize: new google.maps.Size(25, 25)
+        };
+
+        var marker = new google.maps.Marker({
+          map: map,
+          position: place.geometry.location,
+          icon: image
+        });
+        marker.setMap(map);
+
+        var contentString = '<h1 id="#info-header"><b>'+place.name+'</b></h1>'
+          +'<p><b>Address: </b>'+place.vicinity+'</p>'
+          +'<p><b>Rating: </b>'+place.rating+'/5.0</p>';
+
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.setContent(contentString);
+          infowindow.open(map, this);
+        });
+      }
+
+      function callback(results, status) {
+        if (status == google.maps.places.PlacesServiceStatus.OK) {
+          for (var i = 0; i < results.length; i++) {
+            createMarker(results[i]);
+          }
+        }
+      }
+
+      function loadScript() {
+        var script = document.createElement("script");
+        script.src = "http://maps.googleapis.com/maps/api/js?callback=initialize";
+        document.body.appendChild(script);
+      }
+
+      // window.onload = loadScript;
+      </script>
+      <div class="container" id="map-canvas"></div>
+  </body>
+  </html>
