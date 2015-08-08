@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Place searches</title>
+    <title>Geolocation</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <style>
@@ -12,35 +12,68 @@
       }
 
     </style>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBUbtFecanLV1DUNqOpGU-mC8l-Ce3VcPY"></script>
+
     <script>
+// Note: This example requires that you consent to location sharing when
+// prompted by your browser. If you see a blank space instead of the map, this
+// is probably because you have denied permission for location sharing.
+
 var map;
+var pos;
 var infowindow;
 
 function initialize() {
-  var pyrmont = new google.maps.LatLng(31.4627, -99.3330);
-
-  map = new google.maps.Map(document.getElementById('map-canvas'), {
-    center: pyrmont,
-    zoom: 7
-  });
-
-  var request = {
-    location: pyrmont,
-    radius: 500,
-    types: ['restaurant']
+  var mapOptions = {
+    zoom: 6
   };
-  infowindow = new google.maps.InfoWindow();
-  var service = new google.maps.places.PlacesService(map);
-  service.nearbySearch(request, callback);
+  map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+
+  // Try HTML5 geolocation
+  if(navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      pos = new google.maps.LatLng(position.coords.latitude,
+                                       position.coords.longitude);
+
+     /* infowindow = new google.maps.InfoWindow({
+        map: map,
+        position: pos,
+        content: 'Location found using HTML5.'
+      });*/
+      
+      infowindow = new google.maps.InfoWindow();
+      map.setCenter(pos);
+      //createMarker(pos);
+      var marker=new google.maps.Marker({
+        position:pos,
+        });
+      
+      marker.setMap(map); 
+    }, function() {
+      handleNoGeolocation(true);
+    });
+  } else {
+    // Browser doesn't support Geolocation
+    handleNoGeolocation(false);
+  }
 }
 
-function callback(results, status) {
-  if (status == google.maps.places.PlacesServiceStatus.OK) {
-    for (var i = 0; i < results.length; i++) {
-      createMarker(results[i]);
-    }
+function handleNoGeolocation(errorFlag) {
+  if (errorFlag) {
+    var content = 'Error: The Geolocation service failed.';
+  } else {
+    var content = 'Error: Your browser doesn\'t support geolocation.';
   }
+
+  var options = {
+    map: map,
+    position: new google.maps.LatLng(60, 105),
+    content: content
+  };
+
+  var infowindow = new google.maps.InfoWindow(options);
+  map.setCenter(options.position);
 }
 
 function createMarker(place) {
@@ -49,9 +82,10 @@ function createMarker(place) {
     map: map,
     position: place.geometry.location
   });
+  marker.setMap(map);
 
   google.maps.event.addListener(marker, 'click', function() {
-    infowindow.setContent(place.name);
+    infowindow.setContent('Hello');
     infowindow.open(map, this);
   });
 }
