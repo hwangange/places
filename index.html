@@ -24,11 +24,11 @@
   $(document).ready(function(){
     $("#myBtn").click(function(event){
       event.preventDefault();
+      //var x = $("#selected").val();
       var x = $("#selected").val();
       $("#demo").innerHTML = x;
       initialize();
-      search();
-      //loadScript();
+      search(x);
     });
   });
 
@@ -107,14 +107,24 @@
   </script>
 </head>
 <body>
-  <h1>Map</h1>
+  <h1>Birdee</h1>
+  <h3>What are you looking for?</h3>
   <select name="What are you looking for?" id="selected">
     <option value="store">Store</option>
     <option value="restaurant">Restaurant</option>
     <option value="hotel">Hotel</option>
+    <option value="ATM">ATM</option>
+    <option value="bank">Bank</option>
+    <option value="bus station">Bus Station</option>
+    <option value="taxi">Taxi</option>
+    <option value="cafe">Cafe</option>
+    <option value="gas station">Gas Station</option>
+    <option value="salon">Salon</option>
+    <option value="boutique">Boutique</option>
+    <option value="bar">Bar</option>
   </select>
   <br><br>
-  <input type="submit" id="myBtn" value="store">
+  <input type="submit" id="myBtn" value="Submit">
   <p id="demo"></p>
   <script>
   </script>
@@ -122,7 +132,7 @@
   var map;
   var pos;
   var infowindow;
-  function search() {
+  function search(text) {
     var mapOptions = {
       zoom: 15
     };
@@ -138,7 +148,7 @@
       var request = {
         location: pos,
         radius: 1000,
-        types: ["store"]
+        types: [String(text)]
       };
 
       infowindow = new google.maps.InfoWindow();
