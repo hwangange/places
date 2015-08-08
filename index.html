@@ -23,15 +23,6 @@
     width: 100%;
   }
 
-  #info-header {
-    font-size: 1em;
-    margin-top: 0.67em;
-    margin-bottom: 0.67em;
-    margin-left: 0;
-    margin-right: 0;
-    font-weight: bold;
-  }
-
   </style>
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -122,7 +113,7 @@
 <body bgcolor="#accbe8">
   <div class="container">
     <header class="page-header">
-      <h1><b>Birdee</b> <small><i>Know the town inside out!</i></small></h1>
+      <h1><b>Birdee   </b> <small><i>  travel made easy</i></small></h1>
     </header>
     <div class="dropdown center">
       <h3><small>What are you looking for?</small></h3>
@@ -199,9 +190,20 @@
         });
         marker.setMap(map);
 
-        var contentString = '<h1 id="#info-header"><b>'+place.name+'</b></h1>'
-          +'<p><b>Address: </b>'+place.vicinity+'</p>'
-          +'<p><b>Rating: </b>'+place.rating+'/5.0</p>';
+        /*var request = {
+          placeId: place.placeId;
+        }
+
+        var service = new google.maps.places.PlacesService(map);
+        service.getDetails(request, callback);*/
+
+        //var location = String(place.geometry.location);
+        //var ary = location.split(/(|)/);
+
+        var contentString = '<div style="margin-top:0.37em;margin-bottom:0.37em"<h1 style="font-size:90%"><b>'+place.name+'</b></h1>'
+          +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Address: </b>'+place.vicinity+'</p>'
+          +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Rating: </b>'+place.rating+'/5.0</p></div>';
+        //  +'<p style="margin-top:0.37em;margin-bottom:0.37em;text-alignment:center"><a href = "https://maps.google.com?saddr=Current+Location&daddr='+ary[2]+'">Click for Directions</a></p></div>';
 
         google.maps.event.addListener(marker, 'click', function() {
           infowindow.setContent(contentString);
