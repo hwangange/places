@@ -1,166 +1,186 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Geolocation</title>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <style>
-      html, body, #map-canvas {
-        height: 100%;
-        margin: 1%;
-        padding: 0;
-      }
+<head>
+  <title>Geolocation</title>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+  <style>
+  html, body, #map-canvas {
+    height: 100%;
+    margin: 1%;
+    padding: 0;
+  }
 
-    </style>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+  </style>
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
-    <script>
-// Note: This example requires that you consent to location sharing when
-// prompted by your browser. If you see a blank space instead of the map, this
-// is probably because you have denied permission for location sharing.
 
-var map;
-var pos;
-var infowindow;
+  <script>
+  // Note: This example requires that you consent to location sharing when
+  // prompted by your browser. If you see a blank space instead of the map, this
+  // is probably because you have denied permission for location sharing.
 
-function initialize() {
-  var mapOptions = {
-    zoom: 15
-  };
-  map = new google.maps.Map(document.getElementById('map-canvas'),
-      mapOptions);
+  $(document).ready(function(){
+    $("#myBtn").click(function(event){
+      event.preventDefault();
+      var x = $("#selected").val();
+      $("#demo").innerHTML = x;
+      initialize();
+      search();
+      //loadScript();
+    });
+  });
 
-  // Try HTML5 geolocation
-  if(navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      pos = new google.maps.LatLng(position.coords.latitude,
-                                       position.coords.longitude);
-                                      
-      /*var request = {
+  var map;
+  var pos;
+  var infowindow;
+
+  function initialize() {
+    var mapOptions = {
+      zoom: 15
+    };
+    map = new google.maps.Map(document.getElementById('map-canvas'),
+    mapOptions);
+
+    // Try HTML5 geolocation
+    if(navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        pos = new google.maps.LatLng(position.coords.latitude,
+          position.coords.longitude);
+
+          /*var request = {
+          location: pos,
+          radius: 1000,
+          types: ['store']
+        };*/
+
+        infowindow = new google.maps.InfoWindow({
+          map: map,
+          position: pos,
+          content: 'You are here.'
+        });
+
+        infowindow = new google.maps.InfoWindow();
+        map.setCenter(pos);
+        var marker=new google.maps.Marker({
+          position:pos,
+          icon: {
+            // Star
+            path: 'M 0,-24 6,-7 24,-7 10,4 15,21 0,11 -15,21 -10,4 -24,-7 -6,-7 z',
+            fillColor: '#ffff00',
+            fillOpacity: 1,
+            scale: 1/4,
+            strokeColor: '#bd8d2c',
+            strokeWeight: 1
+          }
+        });
+
+        marker.setMap(map);
+      }, function() {
+        handleNoGeolocation(true);
+      });
+    } else {
+      // Browser doesn't support Geolocation
+      handleNoGeolocation(false);
+    }
+  }
+
+  function handleNoGeolocation(errorFlag) {
+    if (errorFlag) {
+      var content = 'Error: The Geolocation service failed.';
+    } else {
+      var content = 'Error: Your browser doesn\'t support geolocation.';
+    }
+
+    var options = {
+      map: map,
+      position: new google.maps.LatLng(60, 105),
+      content: content
+    };
+
+    var infowindow = new google.maps.InfoWindow(options);
+    map.setCenter(options.position);
+  }
+  google.maps.event.addDomListener(window, 'load', initialize);
+
+  </script>
+</head>
+<body>
+  <h1>Map</h1>
+  <select name="What are you looking for?" id="selected">
+    <option value="store">Store</option>
+    <option value="restaurant">Restaurant</option>
+    <option value="hotel">Hotel</option>
+  </select>
+  <br><br>
+  <input type="submit" id="myBtn" value="store">
+  <p id="demo"></p>
+  <script>
+  </script>
+  <script>
+  var map;
+  var pos;
+  var infowindow;
+  function search() {
+    var mapOptions = {
+      zoom: 15
+    };
+    map = new google.maps.Map(document.getElementById('map-canvas'),
+    mapOptions);
+    if(navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position){
+        pos = new google.maps.LatLng(position.coords.latitude,
+          position.coords.longitude);
+        }
+      );
+
+      var request = {
         location: pos,
         radius: 1000,
-        types: ['store']
-      };*/
+        types: ["store"]
+      };
 
-     infowindow = new google.maps.InfoWindow({
-        map: map,
-        position: pos,
-        content: 'You are here.'
-      });
-      
       infowindow = new google.maps.InfoWindow();
-      map.setCenter(pos);
-      var marker=new google.maps.Marker({
-        position:pos,
-        icon: {
-        // Star
-        path: 'M 0,-24 6,-7 24,-7 10,4 15,21 0,11 -15,21 -10,4 -24,-7 -6,-7 z',
-        fillColor: '#ffff00',
-        fillOpacity: 1,
-        scale: 1/4,
-        strokeColor: '#bd8d2c',
-        strokeWeight: 1
+      var service = new google.maps.places.PlacesService(map);
+      service.nearbySearch(request, callback);
     }
-        });
-      
-      marker.setMap(map); 
-    }, function() {
-      handleNoGeolocation(true);
+
+    else {
+      handleNoGeolocation(false);
+    }
+  }
+
+  function createMarker(place) {
+    var placeLoc = place.geometry.location;
+    var marker = new google.maps.Marker({
+      map: map,
+      position: place.geometry.location
     });
-  } else {
-    // Browser doesn't support Geolocation
-    handleNoGeolocation(false);
-  }
-}
+    marker.setMap(map);
 
-function handleNoGeolocation(errorFlag) {
-  if (errorFlag) {
-    var content = 'Error: The Geolocation service failed.';
-  } else {
-    var content = 'Error: Your browser doesn\'t support geolocation.';
+    google.maps.event.addListener(marker, 'click', function() {
+      infowindow.setContent(place.name);
+      infowindow.open(map, this);
+    });
   }
 
-  var options = {
-    map: map,
-    position: new google.maps.LatLng(60, 105),
-    content: content
-  };
-
-  var infowindow = new google.maps.InfoWindow(options);
-  map.setCenter(options.position);
-}
-google.maps.event.addDomListener(window, 'load', initialize);
-
-    </script>
-  </head>
-  <body>
-    <h1>Map</h1>
-    <select name="What are you looking for?" id="selected">
-      <option value="store">Store</option>
-      <option value="restaurant">Restaurant</option>
-      <option value="hotel">Hotel</option>
-    </select>
-    <br><br>
-    <input type="submit" id="myBtn" onclick="myFunction()" value="Submit">
-    <p id="demo"></p>    
-    <script>
-      function myFunction() {
-        var x = document.getElementById("selected").value;
-        document.getElementById("demo").innerHTML = x;
-        initialize();
-        search(x);
-        loadScript();
+  function callback(results, status) {
+    if (status == google.maps.places.PlacesServiceStatus.OK) {
+      for (var i = 0; i < results.length; i++) {
+        createMarker(results[i]);
       }
-     </script>
-     <script>
-       function search(text) {       
-           navigator.geolocation.getCurrentPosition({
-           var pos = new google.maps.LatLng(position.coords.latitude,
-                                  position.coords.longitude);
-           }
-           
-           var request = {
-            location: pos,
-            radius: 1000,
-            types: ["store"]
-          };
-          
-          var service = new google.maps.places.PlacesService(map);
-          service.nearbySearch(request, callback);
-       }
-       
-       function createMarker(place) {
-          var placeLoc = place.geometry.location;
-          var marker = new google.maps.Marker({
-            map: map,
-            position: place.geometry.location
-          });
-          marker.setMap(map);
-        
-          google.maps.event.addListener(marker, 'click', function() {
-            infowindow.setContent(place.name);
-            infowindow.open(map, this);
-          });
-        }
-        
-        function callback(results, status) {
-          if (status == google.maps.places.PlacesServiceStatus.OK) {
-            for (var i = 0; i < results.length; i++) {
-              createMarker(results[i]);
-            }
-          }
-        }
-        
-        function loadScript() {
-          var script = document.createElement("script");
-          script.src = "http://maps.googleapis.com/maps/api/js?callback=initialize";
-          document.body.appendChild(script);
-        }
-        
-       // window.onload = loadScript;
-     </script>
-    
-    </form>
-    <div id="map-canvas"></div>
-  </body>
+    }
+  }
+
+  function loadScript() {
+    var script = document.createElement("script");
+    script.src = "http://maps.googleapis.com/maps/api/js?callback=initialize";
+    document.body.appendChild(script);
+  }
+
+  // window.onload = loadScript;
+  </script>
+  <div id="map-canvas"></div>
+</body>
 </html>
