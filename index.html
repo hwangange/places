@@ -186,7 +186,8 @@
         var marker = new google.maps.Marker({
           map: map,
           position: place.geometry.location,
-          icon: image
+          icon: image,
+          placeId: place.place_id
         });
         marker.setMap(map);
 
