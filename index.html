@@ -11,7 +11,7 @@
   html, body, #map-canvas {
     height: 100%;
     padding: 0;
-    
+
   }
 
   body {
@@ -164,7 +164,24 @@
 
           infowindow = new google.maps.InfoWindow();
           var service = new google.maps.places.PlacesService(map);
+
+          /********* IMPORTANT ********/
           service.nearbySearch(request, callback);
+          /********* IMPORTANT ********
+          replace with
+
+          var request = {
+            placeId: 'insert id here'
+          };
+
+          service.getDetails(request,callback);
+
+          function callback(place, status) {
+            if (status == google.maps.places.PlacesServiceStatus.OK) {
+              createMarker(place);
+            }
+          }
+           */
         }
 
         else {
@@ -187,24 +204,28 @@
           map: map,
           position: place.geometry.location,
           icon: image,
+          /*place: {
+            placeId: place.place_id,
+            location: place.geometry.location
+          }*/
           placeId: place.place_id
         });
         marker.setMap(map);
 
-        /*var request = {
+        /*var id_request = {
           placeId: place.placeId;
         }
 
         var service = new google.maps.places.PlacesService(map);
-        service.getDetails(request, callback);*/
+        service.getDetails(id_request, callback);*/
 
         //var location = String(place.geometry.location);
         //var ary = location.split(/(|)/);
 
         var contentString = '<div style="margin-top:0.37em;margin-bottom:0.37em"<h1 style="font-size:90%"><b>'+place.name+'</b></h1>'
           +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Address: </b>'+place.vicinity+'</p>'
-          +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Rating: </b>'+place.rating+'/5.0</p>'
-          +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Place ID: </b>'+place.place_id+'</p></div>';
+          +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Rating: </b>'+place.rating+'/5.0</p></div>'
+        //  +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Place ID: </b>'+place.place_id+'</p></div>';
         //  +'<p style="margin-top:0.37em;margin-bottom:0.37em;text-alignment:center"><a href = "https://maps.google.com?saddr=Current+Location&daddr='+ary[2]+'">Click for Directions</a></p></div>';
 
         google.maps.event.addListener(marker, 'click', function() {
@@ -216,10 +237,19 @@
       function callback(results, status) {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
           for (var i = 0; i < results.length; i++) {
-            createMarker(results[i]);
+            //createMarker(results[i]);
+            var service = new google.maps.places.PlacesService(map); //delete 'var' keyword?
+            service.getDetails({
+              placeId: results[i].place_id
+            }, function(place, status) {
+              if (status === google.maps.places.PlacesServiceStatus.OK) {
+                createMarker(results[i]);
+              }
+            });
           }
         }
       }
+
 
       function loadScript() {
         var script = document.createElement("script");
@@ -232,12 +262,3 @@
       <div class="container" id="map-canvas"></div>
   </body>
   </html>
-  
-  /* Important links
-  Radar Search: 
-  https://developers.google.com/maps/documentation/javascript/places#radar_search_requests
-  Place Detail Results: 
-  https://developers.google.com/maps/documentation/javascript/places#place_details_requests
-  Place ID'S: 
-  https://developers.google.com/places/place-id
-*/
