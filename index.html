@@ -244,7 +244,7 @@
             var service = new google.maps.places.PlacesService(map); //delete var?
             service.getDetails({
               placeId: results[i].place_id
-            }, function(place, status) {
+            }, function(results[i], status) {
               if (status === google.maps.places.PlacesServiceStatus.OK) { //three equals
                 createMarker(results[i]);
               }
