@@ -47,6 +47,7 @@
   var map;
   var pos;
   var infowindow;
+  var service;
 
   function initialize() {
     var mapOptions = {
@@ -158,12 +159,12 @@
 
           var request = {
             location: pos,
-            radius: 5000, //1000
+            radius: 7500, //1000 m
             types: [String(text)]
           };
 
           infowindow = new google.maps.InfoWindow();
-          var service = new google.maps.places.PlacesService(map);
+          service = new google.maps.places.PlacesService(map);
 
           /********* IMPORTANT ********/
           service.nearbySearch(request, callback);
@@ -216,7 +217,7 @@
           placeId: place.placeId;
         }
 
-        var service = new google.maps.places.PlacesService(map);
+        service = new google.maps.places.PlacesService(map);
         service.getDetails(id_request, callback);*/
 
         //var location = String(place.geometry.location);
@@ -237,15 +238,17 @@
       function callback(results, status) {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
           for (var i = 0; i < results.length; i++) {
-            //createMarker(results[i]);
-            var service = new google.maps.places.PlacesService(map); //delete 'var' keyword?
+            createMarker(results[i]);
+
+            /* SOMEWHERE HERE IS A BUG*/
+            /*service = new google.maps.places.PlacesService(map);
             service.getDetails({
               placeId: results[i].place_id
             }, function(place, status) {
-              if (status === google.maps.places.PlacesServiceStatus.OK) {
+              if (status == google.maps.places.PlacesServiceStatus.OK) {
                 createMarker(results[i]);
               }
-            });
+            });*/
           }
         }
       }
