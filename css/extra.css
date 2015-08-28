@@ -58,6 +58,7 @@ span.customStyleSelectBox.changed {
   background:url(images/arrow.gif) no-repeat center right;
  }*/
 
+
  /* info window */
 /*#map-canvas {  //remove margin: 0
     margin: 0;
@@ -80,6 +81,7 @@ span.customStyleSelectBox.changed {
 #iw-container {
     margin-bottom: 10px;
 }
+*/
 #iw-container .iw-title {
     font-family: 'Open Sans Condensed', sans-serif;
     font-size: 22px;
@@ -90,6 +92,7 @@ span.customStyleSelectBox.changed {
     margin: 0;
     border-radius: 2px 2px 0 0;
 }
+/*
 #iw-container .iw-content {
     font-size: 13px;
     line-height: 18px;
