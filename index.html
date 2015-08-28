@@ -223,13 +223,29 @@
         //var location = String(place.geometry.location);
         //var ary = location.split(/(|)/);
 
+
+        // This event expects a click on a marker
+        // When this event is fired the Info Window is opened.
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.open(map,marker);
+        });
+      
+        // Event that closes the Info Window with a click on the map
+        google.maps.event.addListener(map, 'click', function() {
+          infowindow.close();
+        });
+
+
+
+
         var contentString = '<div style="margin-top:0.37em;margin-bottom:0.37em"<h1 style="font-size:90%"><b>'+place.name+'</b></h1>'
           +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Address: </b>'+place.vicinity+'</p>'
           +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Rating: </b>'+place.rating+'/5.0</p></div>'
         //  +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Place ID: </b>'+place.place_id+'</p></div>';
         //  +'<p style="margin-top:0.37em;margin-bottom:0.37em;text-alignment:center"><a href = "https://maps.google.com?saddr=Current+Location&daddr='+ary[2]+'">Click for Directions</a></p></div>';
 
-        google.maps.event.addListener(marker, 'click', function() {
+        //google.maps.event.addListener(marker, 'click', function() {
+          google.maps.event.addListener(infowindow, 'domready', function() {
           infowindow.setContent(contentString);
           //customization
           // Reference to the DIV that wraps the bottom of infowindow
