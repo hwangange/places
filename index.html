@@ -223,17 +223,17 @@
         //var location = String(place.geometry.location);
         //var ary = location.split(/(|)/);
 
-
+/*
         // This event expects a click on a marker
         // When this event is fired the Info Window is opened.
         google.maps.event.addListener(marker, 'click', function() {
           infowindow.open(map,marker);
         });
-      
+
         // Event that closes the Info Window with a click on the map
         google.maps.event.addListener(map, 'click', function() {
           infowindow.close();
-        });
+        });*/
 
 
 
@@ -244,9 +244,10 @@
         //  +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Place ID: </b>'+place.place_id+'</p></div>';
         //  +'<p style="margin-top:0.37em;margin-bottom:0.37em;text-alignment:center"><a href = "https://maps.google.com?saddr=Current+Location&daddr='+ary[2]+'">Click for Directions</a></p></div>';
 
-        //google.maps.event.addListener(marker, 'click', function() {
-          google.maps.event.addListener(infowindow, 'domready', function() {
+          google.maps.event.addListener(marker, 'click', function() {
+          //google.maps.event.addListener(infowindow, 'domready', function() {
           infowindow.setContent(contentString);
+          /*
           //customization
           // Reference to the DIV that wraps the bottom of infowindow
           var iwOuter = $('.gm-style-iw');
@@ -255,7 +256,7 @@
            * We use jQuery and create a iwBackground variable,
            * and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
           */
-          var iwBackground = iwOuter.prev();
+        /*  var iwBackground = iwOuter.prev();
 
           // Removes background shadow DIV
           iwBackground.children(':nth-child(2)').css({'display' : 'none'});
@@ -288,8 +289,8 @@
 
           // The API automatically applies 0.7 opacity to the button after the mouseout event. This function reverses this event to the desired value.
           iwCloseBtn.mouseout(function(){
-            $(this).css({opacity: '1'});
-            
+            $(this).css({opacity: '1'}); */
+
           infowindow.open(map, this);
         });
       }
