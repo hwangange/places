@@ -68,7 +68,7 @@ span.customStyleSelectBox.changed {
 }
 #map-canvas img {
     max-width: none !important;
-}
+}*/
 .gm-style-iw {
     width: 350px !important;
     top: 15px !important;
@@ -81,18 +81,20 @@ span.customStyleSelectBox.changed {
 #iw-container {
     margin-bottom: 10px;
 }
-*/
+
 #iw-container .iw-title {
     font-family: 'Open Sans Condensed', sans-serif;
     font-size: 22px;
     font-weight: 400;
     padding: 10px;
-    background-color: #48b5e9;
+    background-color: #f5f0de;
     color: white;
     margin: 0;
     border-radius: 2px 2px 0 0;
 }
 /*
+.iw-title background-color: #48b5e9 (previous)
+
 #iw-container .iw-content {
     font-size: 13px;
     line-height: 18px;
