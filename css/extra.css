@@ -54,6 +54,10 @@ span.customStyleSelectBox.changed {
   background-color: #f0dea4;
   }
 
+  #alert {
+    visibility: hidden;
+  }
+
 /*.customStyleSelectBoxInner {
   background:url(images/arrow.gif) no-repeat center right;
  }*/
