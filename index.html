@@ -35,6 +35,7 @@
   // is probably because you have denied permission for location sharing.
 
   $(document).ready(function(){
+    $(".container").fadeIn();
     $("#myBtn").click(function(event){
       event.preventDefault();
       //var x = $("#selected").val();
@@ -252,19 +253,19 @@
 
           //customization
           // Reference to the DIV that wraps the bottom of infowindow
-          var iwOuter = $('.gm-style-iw');
+        //  var iwOuter = $('.gm-style-iw');
 
           /* Since this div is in a position prior to .gm-div style-iw.
            * We use jQuery and create a iwBackground variable,
            * and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
           */
-          var iwBackground = iwOuter.prev();
+      //    var iwBackground = iwOuter.prev();
 
           // Removes background shadow DIV
-          iwBackground.children(':nth-child(2)').css({'display' : 'none'});
+      //    iwBackground.children(':nth-child(2)').css({'display' : 'none'});
 
           // Removes white background DIV
-          iwBackground.children(':nth-child(4)').css({'display' : 'none'});
+    //      iwBackground.children(':nth-child(4)').css({'display' : 'none'});
 
           // Moves the infowindow 115px to the right.
         /*  iwOuter.parent().parent().css({left: '115px'});
