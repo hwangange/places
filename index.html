@@ -119,6 +119,10 @@
     <header class="page-header">
       <h1><b>Birdee   </b> <small><i>  travel made easy</i></small></h1>
     </header>
+    <div class = "alert alert-danger fade in" id="alert">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Sorry!</strong> No results were returned from your search. 
+    </div>
     <div class="dropdown center">
       <h3><small>What are you looking for?</small></h3>
       <select name="What are you looking for?" id="selected">
@@ -191,6 +195,10 @@
         else {
           handleNoGeolocation(false);
         }
+      }
+
+      function alert() {
+          document.getElementById("id").visibility = visible;
       }
 
       function createMarker(place) {
@@ -300,6 +308,8 @@
 
       function callback(results, status) {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
+          if(results.length==0)
+            alert();
           for (var i = 0; i < results.length; i++) {
             //createMarker(results[i]);
 
