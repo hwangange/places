@@ -16,7 +16,7 @@
   }
 
   body {
-    background: #accbe8 url("/img/half-tree.png") no-repeat fixed right;
+    background: #accbe8 url("img/half-tree.png") no-repeat fixed right;
   }
 
   .center {
@@ -35,14 +35,19 @@
   // is probably because you have denied permission for location sharing.
 
   $(document).ready(function(){
-    $(".container").fadeIn();
+    $("#site-title").fadeIn();
+    $("#site-slogan").fadeIn(3000);
     $("#myBtn").click(function(event){
       event.preventDefault();
       //var x = $("#selected").val();
       var x = $("#selected").val();
+      var y = $("#radius-selected").val();
       $("#demo").innerHTML = x;
       initialize();
-      search(x);
+      search(x,y);
+    });
+    $(".close").click(function(){ //close method closes alert message
+      $("#alert").alert("close");
     });
   });
 
@@ -117,7 +122,7 @@
 <body bgcolor="#accbe8">
   <div class="container">
     <header class="page-header">
-      <h1><b>Birdee   </b> <small><i>  travel made easy</i></small></h1>
+      <h1 style="visibility: hidden"><b id="site-title">Birdee   </b> <small><i id="site-slogan">  travel made easy</i></small></h1>
     </header>
     <div class = "alert alert-danger fade in" id="alert">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -139,6 +144,14 @@
         <option value="gas_station">Gas Station</option>
         <option value="clothing_store">Clothing</option>
       </select>
+      <h3><small>Choose a radius.</small></h3>
+      <select id="radius-selected">
+        <option value="500">500 m</option>
+        <option value="1000">1000 m</option>
+        <option value="2000">2000 m</option>
+        <option value="5000">5000 m</option>
+        <option value="7500">7500 m</option>
+      <select>
       <input type="submit" id="myBtn" value="Submit" class="btn btn-success btn-sm">
       <p id="demo"></p>
     </div>
@@ -151,7 +164,7 @@
       var map;
       var pos;
       var infowindow;
-      function search(text) {
+      function search(text, rad) {
         var mapOptions = {
           zoom: 15
         };
@@ -166,7 +179,7 @@
 
           var request = {
             location: pos,
-            radius: 7500, //1000 m
+            radius: 7500, //[Number(rad)],
             types: [String(text)]
           };
 
@@ -198,7 +211,8 @@
       }
 
       function alert() {
-          document.getElementById("id").visibility = visible;
+          document.getElementById("#alert").style.visibility = visible;
+          document.getElementById("#alert").style.display = block;
       }
 
       function createMarker(place) {
@@ -250,7 +264,7 @@
         function review(place) {
           var reviewString;
           for(int i = 0; i < place.reviews.length; i++) {
-            reviewString+=place.reviews[i].text + '\n';
+            reviewString+=place.reviews[i].text + "\n";
           }
           return reviewString;
         }
