@@ -2,6 +2,10 @@ body {
   font-family: 'Nunito', sans-serif;
 }
 
+#h1{
+  visibility: hidden;
+}
+
 h1{
   font-family: 'Biryani', sans-serif;
   margin: 15px 0;
@@ -56,6 +60,7 @@ span.customStyleSelectBox.changed {
 
   #alert {
     visibility: hidden;
+    display: none;
   }
 
 /*.customStyleSelectBoxInner {
