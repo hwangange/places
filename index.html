@@ -44,7 +44,7 @@
       var y = $("#radius-selected").val();
       $("#demo").innerHTML = x;
       initialize();
-      search(x,y);
+      search(x);//search(x,y);
     });
     $(".close").click(function(){ //close method closes alert message
       $("#alert").alert("close");
@@ -164,7 +164,7 @@
       var map;
       var pos;
       var infowindow;
-      function search(text, rad) {
+      function search(text) {
         var mapOptions = {
           zoom: 15
         };
@@ -263,7 +263,7 @@
 
         function review(place) {
           var reviewString;
-          for(int i = 0; i < place.reviews.length; i++) {
+          for(var i = 0; i < place.reviews.length; i++) {
             reviewString+=place.reviews[i].text + "\n";
           }
           return reviewString;
