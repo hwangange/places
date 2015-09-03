@@ -269,15 +269,20 @@
         function review(place) {
           var reviewString;
           for(var i = 0; i < place.reviews.length; i++) {
-            reviewString+=place.reviews[i].text + "\n";
+            reviewString+=place.reviews[i].text + '<br><br>';
           }
-          return reviewString;
+          document.getElementById("review-page").innerHTML =
+            '<h3>'+place.name+'</h3>'
+            +'<br><br>'+reviewString;
+          //return reviewString;
         }
 
         var contentString = '<div id="iw-container" class="gm-style-iw" style="margin-top:0.37em;margin-bottom:0.37em">'
           + '<h1 class="iw-title" style="font-size:90%"><b>'+place.name+'</b></h1>'
           +'<div class="iw-content"><p style="margin-top:0.37em;margin-bottom:0.37em"><b>Address: </b>'+place.vicinity+'</p>'
-          +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Rating: </b>'+place.rating+'/5.0</p></div><div class="iw-bottom-gradient"></div></div>'; //semicolon added
+          +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Rating: </b>'+place.rating+'/5.0</p>'
+          +'<input type="submit" id="reviewBtn" value="View Reviews" class="btn btn-success btn-sm" onclick="review(place)"></div>'
+          +'<div class="iw-bottom-gradient"></div></div>'; //semicolon added
       //+'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Reviews: </b>'+review(place)+</p>'
         //  +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Place ID: </b>'+place.place_id+'</p></div>';
         //  +'<p style="margin-top:0.37em;margin-bottom:0.37em;text-alignment:center"><a href = "https://maps.google.com?saddr=Current+Location&daddr='+ary[2]+'">Click for Directions</a></p></div>';
@@ -364,5 +369,6 @@
       // window.onload = loadScript;
       </script>
       <div class="container" id="map-canvas"></div>
+      <div class="container" id="review-page"></div>
   </body>
   </html>
