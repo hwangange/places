@@ -265,18 +265,6 @@
           infowindow.close();
         });*/
 
-
-        function review(place) {
-          var reviewString;
-          for(var i = 0; i < place.reviews.length; i++) {
-            reviewString+=place.reviews[i].text + '<br><br>';
-          }
-          document.getElementById("review-page").innerHTML =
-            '<h3>'+place.name+'</h3>'
-            +'<br><br>'+reviewString;
-          //return reviewString;
-        }
-
         var contentString = '<div id="iw-container" class="gm-style-iw" style="margin-top:0.37em;margin-bottom:0.37em">'
           + '<h1 class="iw-title" style="font-size:90%"><b>'+place.name+'</b></h1>'
           +'<div class="iw-content"><p style="margin-top:0.37em;margin-bottom:0.37em"><b>Address: </b>'+place.vicinity+'</p>'
@@ -336,6 +324,17 @@
 
           infowindow.open(map, this);
         });
+      }
+
+      function review(place) {
+        var reviewString='';
+        /*for(var i = 0; i < place.reviews.length; i++) {
+          reviewString+=place.reviews[i].text + '<br><br>';
+        }
+        document.getElementById("review-page").innerHTML =
+          '<h3>'+place.name+'</h3>'
+          +'<br><br>'+reviewString;*/
+        //return reviewString;
       }
 
       function callback(results, status) {
