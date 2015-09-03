@@ -36,8 +36,8 @@
 
   $(document).ready(function(){
     //$("#site-title").css({"visibility": "visible"});
-    $("#site-title").fadeIn(3000);
-    $("#site-slogan").fadeIn(5000);
+    $("#site-title").fadeIn(2000);
+    $("#site-slogan").fadeIn(3000);
     $("#myBtn").click(function(event){
       event.preventDefault();
       //var x = $("#selected").val();
@@ -129,8 +129,8 @@
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <strong>Sorry!</strong> No results were returned from your search.
     </div>
-    <div class="dropdown center">
-      <h3><small>What are you looking for?</small></h3>
+    <span class="dropdown center" style="display:inline">
+      <h3 style="display:inline-block"><small>I am searching for </small></h3>
       <select name="What are you looking for?" id="selected">
         <option value="lodging">Lodging</option>
         <option value="food">Food</option>
@@ -145,17 +145,21 @@
         <option value="gas_station">Gas Station</option>
         <option value="clothing_store">Clothing</option>
       </select>
-      <h3><small>Choose a radius.</small></h3>
+    </span>
+    <span class="dropdown center" style="display:inline">
+      <h3 style="display:inline-block"><small>within</small></h3>
       <select id="radius-selected">
-        <option value="500">500 m</option>
-        <option value="1000">1000 m</option>
-        <option value="2000">2000 m</option>
-        <option value="5000">5000 m</option>
-        <option value="7500">7500 m</option>
-      <select>
+        <option value="500">500</option>
+        <option value="1000">1000</option>
+        <option value="2000">2000</option>
+        <option value="5000">5000</option>
+        <option value="7500">7500</option>
+      </select>
+      <h3 style="display:inline"><small>meters.</small></h3>
+      <br>
       <input type="submit" id="myBtn" value="Submit" class="btn btn-success btn-sm">
       <p id="demo"></p>
-    </div>
+    </span>
     <br>
 
     </div>
