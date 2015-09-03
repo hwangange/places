@@ -31,6 +31,10 @@ nav a {
   padding: 15px 10px;
 }
 
+#review-page {
+  margin: auto;
+}
+
 footer {
   font-size: 0.75em;
   text-align: center;
