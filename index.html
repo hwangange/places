@@ -45,7 +45,7 @@
       var y = $("#radius-selected").val();
       $("#demo").innerHTML = x;
       initialize();
-      search(x);//search(x,y);
+      search(x, y);
     });
     $(".close").click(function(){ //close method closes alert message
       $("#alert").alert("close");
@@ -165,7 +165,7 @@
       var map;
       var pos;
       var infowindow;
-      function search(text) {
+      function search(text, rad) {
         var mapOptions = {
           zoom: 15
         };
