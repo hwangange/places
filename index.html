@@ -38,6 +38,12 @@
     //$("#site-title").css({"visibility": "visible"});
     $("#site-title").fadeIn(2000);
     $("#site-slogan").fadeIn(3000);
+    $("#reviewBtn").click(function(event){
+      /*event.preventDefault();
+      var x = $("#reviewBtn").val();
+      review(x);*/
+      $("#review-page").fadeIn(1000);
+    });
     $("#myBtn").click(function(event){
       event.preventDefault();
       //var x = $("#selected").val();
@@ -268,8 +274,9 @@
         var contentString = '<div id="iw-container" class="gm-style-iw" style="margin-top:0.37em;margin-bottom:0.37em">'
           + '<h1 class="iw-title" style="font-size:90%"><b>'+place.name+'</b></h1>'
           +'<div class="iw-content"><p style="margin-top:0.37em;margin-bottom:0.37em"><b>Address: </b>'+place.vicinity+'</p>'
+          +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Rating: </b>'+place+'/5.0</p>'
           +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Rating: </b>'+place.rating+'/5.0</p>'
-          +'<input type="submit" id="reviewBtn" value="View Reviews" class="btn btn-success btn-sm" onclick="review(place)"></div>'
+          +'<input type="submit" id="reviewBtn" value="View Reviews" class="btn btn-success btn-sm"> onclick="review(place)"></div>'
           +'<div class="iw-bottom-gradient"></div></div>'; //semicolon added
       //+'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Reviews: </b>'+review(place)+</p>'
         //  +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Place ID: </b>'+place.place_id+'</p></div>';
@@ -327,13 +334,14 @@
       }
 
       function review(place) {
-        var reviewString='';
-        /*for(var i = 0; i < place.reviews.length; i++) {
+        /*var reviewString='';
+        for(var i = 0; i < place.reviews.length; i++) {
           reviewString+=place.reviews[i].text + '<br><br>';
         }
         document.getElementById("review-page").innerHTML =
           '<h3>'+place.name+'</h3>'
           +'<br><br>'+reviewString;*/
+        document.getElementById("review-page").innerHTML = 'The place is ' + place.name;
         //return reviewString;
       }
 
