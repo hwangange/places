@@ -33,6 +33,8 @@ nav a {
 
 #review-page {
   margin: auto;
+  background: #6ab47b;
+  border-radius: 25px;
 }
 
 footer {
