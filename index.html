@@ -63,8 +63,11 @@
   var pos;
   var infowindow;
   var service;
+  var directionsDisplay;
+  var directionsService = new google.maps.DirectionsService();
 
   function initialize() {
+    directionsDisplay = new google.maps.DirectionsRenderer();
     var mapOptions = {
       zoom: 15
     };
@@ -96,7 +99,7 @@
           }
         });
 
-        marker.setMap(map);
+        marker.setMap(map); //directionsDisplay.setMap()??
       }, function() {
         handleNoGeolocation(true);
       });
@@ -122,6 +125,25 @@
     var infowindow = new google.maps.InfoWindow(options);
     map.setCenter(options.position);
   }
+
+  function calcRoute(place) {
+    var start = pos;
+    var end = place;
+
+    var request = {
+      origin:start,
+      destination:end,
+      travelMode: google.maps.TravelMode.DRIVING
+    };
+    directionsService.route(request, function(result, status) {
+      if (status == google.maps.DirectionsStatus.OK) {
+        directionsDisplay.setDirections(result);
+      } else {
+        window.alert('Directions request failed due to ' + status);
+      }
+    });
+  }
+
   google.maps.event.addDomListener(window, 'load', initialize);
 
   </script>
@@ -175,6 +197,7 @@
       var map;
       var pos;
       var infowindow;
+      var dest;
       function search(text, rad) {
         var mapOptions = {
           zoom: 15
@@ -276,15 +299,22 @@
           +'<div class="iw-content"><p style="margin-top:0.37em;margin-bottom:0.37em"><b>Address: </b>'+place.vicinity+'</p>'
           +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Rating: </b>'+place+'/5.0</p>'
           +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Rating: </b>'+place.rating+'/5.0</p>'
-          +'<input type="submit" id="reviewBtn" value="View Reviews" class="btn btn-success btn-sm"> onclick="review(place)"></div>'
+          +'<input type="submit" id="reviewBtn" value="View Reviews" class="btn btn-success btn-sm" onclick="review(place)"></div>'
+          +'<input type="submit" id="directionsBtn" value="Directions" class="btn btn-success btn-sm" onclick="calcRoute(place)"></div>'
           +'<div class="iw-bottom-gradient"></div></div>'; //semicolon added
       //+'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Reviews: </b>'+review(place)+</p>'
         //  +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Place ID: </b>'+place.place_id+'</p></div>';
         //  +'<p style="margin-top:0.37em;margin-bottom:0.37em;text-alignment:center"><a href = "https://maps.google.com?saddr=Current+Location&daddr='+ary[2]+'">Click for Directions</a></p></div>';
 
+        /*  document.getElementById("directionsBtn").addEventListener("click", function(){
+            var x =
+            calcRoute()
+          });*/
+
           google.maps.event.addListener(marker, 'click', function() {
           //google.maps.event.addListener(infowindow, 'domready', function() {
           infowindow.setContent(contentString);
+          dest = marker.position; //fishy
 
           //customization
           // Reference to the DIV that wraps the bottom of infowindow
