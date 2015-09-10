@@ -37,6 +37,15 @@ nav a {
   border-radius: 25px;
 }
 
+
+#right-panel {
+  margin: auto;
+  float: right;
+  overflow: scroll;
+  height: 100%;
+  width: auto;
+}
+
 footer {
   font-size: 0.75em;
   text-align: center;
