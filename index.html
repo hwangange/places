@@ -42,8 +42,13 @@
       /*event.preventDefault();
       var x = $("#reviewBtn").val();
       review(x);*/
-      $("#review-page").fadeIn(1000);
+      //$("#review-page").fadeIn(1000);
+      alert("Review button was clicked.");
     });
+
+    $("#directionsBtn").click(function(event){
+      alert("Directions button was clicked.");
+    };
     $("#myBtn").click(function(event){
       event.preventDefault();
       //var x = $("#selected").val();
@@ -127,7 +132,7 @@
   }
 
   function calcRoute(place) {
-    var start = pos;
+    /*var start = pos;
     var end = place;
 
     var request = {
@@ -141,7 +146,9 @@
       } else {
         window.alert('Directions request failed due to ' + status);
       }
-    });
+    });*/
+
+    alert("calcRoute function");
   }
 
   google.maps.event.addDomListener(window, 'load', initialize);
@@ -299,8 +306,8 @@
           +'<div class="iw-content"><p style="margin-top:0.37em;margin-bottom:0.37em"><b>Address: </b>'+place.vicinity+'</p>'
           +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Rating: </b>'+place+'/5.0</p>'
           +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Rating: </b>'+place.rating+'/5.0</p>'
-          +'<input type="submit" id="reviewBtn" value="View Reviews" class="btn btn-success btn-sm" onclick="review(place)"></div>'
-          +'<input type="submit" id="directionsBtn" value="Directions" class="btn btn-success btn-sm" onclick="calcRoute(place)"></div>'
+          +'<input type="button" id="reviewBtn" value="View Reviews" class="btn btn-success btn-sm"   ></div>'// onclick="review(place)"></div>'
+          +'<input type="button" id="directionsBtn" value="Directions" class="btn btn-success btn-sm"  ></div>'// onclick="calcRoute(place)"></div>'
           +'<div class="iw-bottom-gradient"></div></div>'; //semicolon added
       //+'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Reviews: </b>'+review(place)+</p>'
         //  +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Place ID: </b>'+place.place_id+'</p></div>';
@@ -371,7 +378,8 @@
         document.getElementById("review-page").innerHTML =
           '<h3>'+place.name+'</h3>'
           +'<br><br>'+reviewString;*/
-        document.getElementById("review-page").innerHTML = 'The place is ' + place.name;
+        alert("Accessed review function");
+        //document.getElementById("review-page").innerHTML = 'The place is ' + place.name;
         //return reviewString;
       }
 
