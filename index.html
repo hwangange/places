@@ -38,17 +38,17 @@
     //$("#site-title").css({"visibility": "visible"});
     $("#site-title").fadeIn(2000);
     $("#site-slogan").fadeIn(3000);
-    $("#reviewBtn").click(function(){
+    //$("#reviewBtn").click(function(event){
       /*event.preventDefault();
-      var x = $("#reviewBtn").val();
+      var x = $("#selected-address").val();
       review(x);*/
       //$("#review-page").fadeIn(1000);
-      window.alert("Review button was clicked.");
+  /*    alert("Review button was clicked.");
     });
 
-    $("#directionsBtn").click(function(){
-      window.alert("Directions button was clicked.");
-    });
+    $("#directionsBtn").click(function(event){
+      alert("Directions button was clicked.");
+    }; */
     $("#myBtn").click(function(event){
       event.preventDefault();
       //var x = $("#selected").val();
@@ -68,11 +68,11 @@
   var pos;
   var infowindow;
   var service;
-  var directionsDisplay;
-  var directionsService = new google.maps.DirectionsService();
+  var directionsDisplay = new google.maps.DirectionsRenderer;
+  var directionsService = new google.maps.DirectionsService;
 
   function initialize() {
-    directionsDisplay = new google.maps.DirectionsRenderer();
+    //directionsDisplay = new google.maps.DirectionsRenderer;
     var mapOptions = {
       zoom: 15
     };
@@ -104,7 +104,7 @@
           }
         });
 
-        marker.setMap(map); //directionsDisplay.setMap()??
+        marker.setMap(map); //directionsDisplay.setMap(map)??
       }, function() {
         handleNoGeolocation(true);
       });
@@ -131,9 +131,9 @@
     map.setCenter(options.position);
   }
 
-  function calcRoute(place) {
+  function calcRoute() {
     /*var start = pos;
-    var end = place;
+    var end = document.getElementById('selected-address');
 
     var request = {
       origin:start,
@@ -305,8 +305,9 @@
           + '<h1 class="iw-title" style="font-size:90%"><b>'+place.name+'</b></h1>'
           +'<div class="iw-content"><p style="margin-top:0.37em;margin-bottom:0.37em"><b>Address: </b>'+place.vicinity+'</p>'
           +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Rating: </b>'+place.rating+'/5.0</p>'
-          +'<input type="submit" id="reviewBtn" value="View Reviews" class="btn btn-success btn-sm"   ></div>'// onclick="review(place)"></div>'
-          +'<input type="submit" id="directionsBtn" value="Directions" class="btn btn-success btn-sm"  ></div>'// onclick="calcRoute(place)"></div>'
+          +'<p style="visibility: hidden" id="selected-address">'+place.vicinity+'</p>'
+          +'<input type="button" id="reviewBtn" value="View Reviews" class="btn btn-success btn-sm" onclick="review()"></div>'
+          +'<input type="button" style="display: inline" id="directionsBtn" value="Directions" class="btn btn-success btn-sm" onclick="calcRoute()"></div>'
           +'<div class="iw-bottom-gradient"></div></div>'; //semicolon added
       //+'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Reviews: </b>'+review(place)+</p>'
         //  +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Place ID: </b>'+place.place_id+'</p></div>';
@@ -369,7 +370,7 @@
         });
       }
 
-      function review(place) {
+      function review() {
         /*var reviewString='';
         for(var i = 0; i < place.reviews.length; i++) {
           reviewString+=place.reviews[i].text + '<br><br>';
