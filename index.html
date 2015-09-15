@@ -312,7 +312,7 @@
           + '<h1 class="iw-title" style="font-size:90%"><b>'+place.name+'</b></h1>'
           +'<div class="iw-content"><p style="margin-top:0.37em;margin-bottom:0.37em"><b>Address: </b>'+place.vicinity+'</p>'
           +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Rating: </b>'+place.rating+'/5.0</p>'
-          +'<p style="display:none" id="selected-address">'+place.vicinity+'</p>'
+          +'<p style="display:none" id="selected-address">'+place.geometry.location+'</p>'
           +'<input type="button" id="reviewBtn" value="View Reviews" class="btn btn-success btn-sm" onclick="review()"></div>'
           +'<input type="button" style="display: inline" id="directionsBtn" value="Directions" class="btn btn-success btn-sm" onclick="calcRoute()"></div>'
           +'<div class="iw-bottom-gradient"></div></div>'; //semicolon added
