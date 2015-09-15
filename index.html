@@ -9,10 +9,15 @@
   <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
   <link href="css/extra.css" rel="stylesheet" media="screen">
   <style>
-  html, body, #map-canvas {
-    height: 800px;
+  html, body {
+    height: 100%;
     padding: 0;
+    margin: 0;
 
+  }
+
+  #map-canvas {
+    height: 800px;
   }
 
   body {
@@ -58,8 +63,8 @@
       initialize();
       search(x, y);
     });
-    $(".close").click(function(){ //close method closes alert message
-      $("#alert").alert("close");
+  /*  $(".close").click(function(){ //close method closes alert message
+      $("#alert").alert("close");*/
     });
   });
 
@@ -78,6 +83,9 @@
     };
     map = new google.maps.Map(document.getElementById('map-canvas'),
     mapOptions);
+
+    directionsDisplay.setMap(map);
+    directionsDisplay.setPanel(document.getElementById('right-panel'));
 
     // Try HTML5 geolocation
     if(navigator.geolocation) {
@@ -251,10 +259,10 @@
         }
       }
 
-      function alert() {
+      /*function alert() {
           document.getElementById("#alert").style.visibility = visible;
           document.getElementById("#alert").style.display = block;
-      }
+      }*/
 
       function createMarker(place) {
         var placeLoc = place.geometry.location;
@@ -305,7 +313,7 @@
           + '<h1 class="iw-title" style="font-size:90%"><b>'+place.name+'</b></h1>'
           +'<div class="iw-content"><p style="margin-top:0.37em;margin-bottom:0.37em"><b>Address: </b>'+place.vicinity+'</p>'
           +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Rating: </b>'+place.rating+'/5.0</p>'
-          +'<p style="visibility: hidden" id="selected-address">'+place.vicinity+'</p>'
+          +'<p style="display:none" id="selected-address">'+place.vicinity+'</p>'
           +'<input type="button" id="reviewBtn" value="View Reviews" class="btn btn-success btn-sm" onclick="review()"></div>'
           +'<input type="button" style="display: inline" id="directionsBtn" value="Directions" class="btn btn-success btn-sm" onclick="calcRoute()"></div>'
           +'<div class="iw-bottom-gradient"></div></div>'; //semicolon added
@@ -314,8 +322,7 @@
         //  +'<p style="margin-top:0.37em;margin-bottom:0.37em;text-alignment:center"><a href = "https://maps.google.com?saddr=Current+Location&daddr='+ary[2]+'">Click for Directions</a></p></div>';
 
         /*  document.getElementById("directionsBtn").addEventListener("click", function(){
-            var x =
-            calcRoute()
+            calcRoute();
           });*/
 
           google.maps.event.addListener(marker, 'click', function() {
@@ -385,8 +392,8 @@
 
       function callback(results, status) {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
-          if(results.length==0)
-            alert();
+          /*if(results.length==0)
+            alert();*/
           for (var i = 0; i < results.length; i++) {
             //createMarker(results[i]);
 
@@ -413,6 +420,7 @@
 
       // window.onload = loadScript;
       </script>
+      <div class="container" id="right-panel"></div>
       <div class="container" id="map-canvas"></div>
       <div class="container" id="review-page"></div>
   </body>
