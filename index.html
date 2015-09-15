@@ -140,7 +140,7 @@
   }
 
   function calcRoute() {
-    /*var start = pos;
+    var start = pos;
     var end = document.getElementById('selected-address');
 
     var request = {
@@ -149,14 +149,14 @@
       travelMode: google.maps.TravelMode.DRIVING
     };
     directionsService.route(request, function(result, status) {
-      if (status == google.maps.DirectionsStatus.OK) {
+      if (status === google.maps.DirectionsStatus.OK) { //3 equals
         directionsDisplay.setDirections(result);
       } else {
         window.alert('Directions request failed due to ' + status);
       }
-    });*/
+    });
 
-    alert("calcRoute function");
+    window.alert("calcRoute function");
   }
 
   google.maps.event.addDomListener(window, 'load', initialize);
@@ -385,7 +385,7 @@
         document.getElementById("review-page").innerHTML =
           '<h3>'+place.name+'</h3>'
           +'<br><br>'+reviewString;*/
-        alert("Accessed review function");
+        window.alert("Accessed review function");
         //document.getElementById("review-page").innerHTML = 'The place is ' + place.name;
         //return reviewString;
       }
@@ -395,9 +395,6 @@
           /*if(results.length==0)
             alert();*/
           for (var i = 0; i < results.length; i++) {
-            //createMarker(results[i]);
-
-            /* SOMEWHERE HERE IS A BUG?*/
             var service = new google.maps.places.PlacesService(map); //delete var?
             var place = results[i];
             service.getDetails({
