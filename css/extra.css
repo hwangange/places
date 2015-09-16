@@ -42,6 +42,7 @@ nav a {
 
 #right-panel {
   margin: auto;
+  display: none;
   border-radius: 10px;
   float: right;
   overflow: scroll;
@@ -50,6 +51,19 @@ nav a {
   border-style: solid;
   border-color: #6ab47b;
   background: #ffffff;
+}
+
+/***BUTTON MENU***/
+ul#button-menu {
+  padding: 0;
+}
+
+ul#button-menu li {
+  display: inline;
+}
+
+ul#button-menu li input:hover {
+  color: #99FFCC;
 }
 
 
