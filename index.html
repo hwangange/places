@@ -72,7 +72,7 @@
   var pos;
   var infowindow;
   var service;
-  var direction-end = '4200 Elkins Rd';
+  var directionsEnd = '4200 Elkins Rd';
   var directionsDisplay = new google.maps.DirectionsRenderer;
   var directionsService = new google.maps.DirectionsService;
 
@@ -141,7 +141,7 @@
 
   function calcRoute() {
     var start = pos;
-    var end = direction-end;
+    var end = directionsEnd;
 
     var request = {
       origin:start,
