@@ -54,6 +54,17 @@
     $("#directionsBtn").click(function(event){
       alert("Directions button was clicked.");
     }; */
+
+    $("#directionsBtn").click(function(event){
+      $("right-panel").css({"display": "inline"});
+      $("right-panel").fadeIn(3000);
+    });
+
+    $("#reviewBtn").click(function(event){
+      $("review-page").css({"display": "inline"});
+      $("review-page").fadeIn(3000);
+    });
+
     $("#myBtn").click(function(event){
       event.preventDefault();
       //var x = $("#selected").val();
@@ -143,6 +154,8 @@
     var start = pos;
     var end = dest;
 
+    //document.getElementById("right-panel").style.display = "inline";
+
     var request = {
       origin:start,
       destination:end,
@@ -155,8 +168,6 @@
         window.alert('Directions request failed due to ' + status);
       }
     });
-
-    window.alert("calcRoute function");
   }
 
   google.maps.event.addDomListener(window, 'load', initialize);
@@ -315,7 +326,7 @@
           +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Rating: </b>'+place.rating+'/5.0</p>'
          // +'<p style="display:none" id="selected-address" value=<code>place.vicinity</code>>'+place.formatted_address+'</p>'
           +'<input type="button" id="reviewBtn" value="View Reviews" class="btn btn-success btn-sm" onclick="review()"></div>'
-          +'<input type="button" style="display: inline" id="directionsBtn" value="Directions" class="btn btn-success btn-sm" onclick="calcRoute()"></div>'
+          +'<input type="button" ' /*style="display: inline"*/+ 'id="directionsBtn" value="Directions" class="btn btn-success btn-sm" onclick="calcRoute()"></div>'
           +'<div class="iw-bottom-gradient"></div></div>'; //semicolon added
       //+'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Reviews: </b>'+review(place)+</p>'
         //  +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Place ID: </b>'+place.place_id+'</p></div>';
@@ -385,6 +396,7 @@
         document.getElementById("review-page").innerHTML =
           '<h3>'+place.name+'</h3>'
           +'<br><br>'+reviewString;*/
+        //document.getElementById("review-page").style.display = "inline";
         window.alert("Accessed review function");
         //document.getElementById("review-page").innerHTML = 'The place is ' + place.name;
         //return reviewString;
