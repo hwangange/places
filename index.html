@@ -224,6 +224,7 @@
       var pos;
       var infowindow;
       var dest;
+      var destPlace;
       function search(text, rad) {
         var mapOptions = {
           zoom: 15
@@ -325,8 +326,9 @@
           +'<div class="iw-content"><p style="margin-top:0.37em;margin-bottom:0.37em"><b>Address: </b>'+place.vicinity+'</p>'
           +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Rating: </b>'+place.rating+'/5.0</p>'
          // +'<p style="display:none" id="selected-address" value=<code>place.vicinity</code>>'+place.formatted_address+'</p>'
-          +'<input type="button" id="reviewBtn" value="View Reviews" class="btn btn-success btn-sm" onclick="review()"></div>'
-          +'<input type="button" ' /*style="display: inline"*/+ 'id="directionsBtn" value="Directions" class="btn btn-success btn-sm" onclick="calcRoute()"></div>'
+          +'<ul id = "button-menu">'
+          +'<li><input type="button" style="display: inline" id="reviewBtn" value="View Reviews" class="btn btn-success btn-sm" onclick="review()"></li>'//</div>'
+          +'<li><input type="button" style="display: inline" id="directionsBtn" value="Directions" class="btn btn-success btn-sm" onclick="calcRoute()"></li></div></div>'
           +'<div class="iw-bottom-gradient"></div></div>'; //semicolon added
       //+'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Reviews: </b>'+review(place)+</p>'
         //  +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Place ID: </b>'+place.place_id+'</p></div>';
@@ -340,6 +342,7 @@
           //google.maps.event.addListener(infowindow, 'domready', function() {
           infowindow.setContent(contentString);
           dest = marker.position; //fishy
+          destPlace = place;
 
           //customization
           // Reference to the DIV that wraps the bottom of infowindow
