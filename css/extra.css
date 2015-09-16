@@ -33,17 +33,23 @@ nav a {
 
 #review-page {
   margin: auto;
-  background: #6ab47b;
   border-radius: 25px;
+  border-style: solid;
+  border-color: #6ab47b;
+  background: #ffffff;
 }
 
 
 #right-panel {
   margin: auto;
+  border-radius: 10px;
   float: right;
   overflow: scroll;
   height: 100%;
   width: auto;
+  border-style: solid;
+  border-color: #6ab47b;
+  background: #ffffff;
 }
 
 
