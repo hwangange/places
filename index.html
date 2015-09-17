@@ -55,7 +55,7 @@
       alert("Directions button was clicked.");
     }; */
 
-    $("#directionsBtn").click(function(event){
+  /*  $("#directionsBtn").click(function(event){
       $("right-panel").css({"display": "inline"});
       $("right-panel").fadeIn(3000);
     });
@@ -63,7 +63,7 @@
     $("#reviewBtn").click(function(event){
       $("review-page").css({"display": "inline"});
       $("review-page").fadeIn(3000);
-    });
+    });*/
 
     $("#myBtn").click(function(event){
       event.preventDefault();
@@ -131,6 +131,12 @@
       // Browser doesn't support Geolocation
       handleNoGeolocation(false);
     }
+
+    var calculate = function() {
+      calcRoute();
+    };
+    document.getElementById("dest").addEventListener("change", calculate);
+    document.getElementById("pos").addEventListener("change", calculate);
   }
 
   function handleNoGeolocation(errorFlag) {
@@ -154,7 +160,7 @@
     var start = pos;
     var end = dest;
 
-    //document.getElementById("right-panel").style.display = "inline";
+    document.getElementById("right-panel").style.display = "inline";
 
     var request = {
       origin:start,
@@ -167,6 +173,10 @@
       } else {
         window.alert('Directions request failed due to ' + status);
       }
+    });
+
+    google.maps.event.addListener(map, 'click', function() {
+      document.getElementById("right-panel").style.display = "none";
     });
   }
 
@@ -399,16 +409,19 @@
         document.getElementById("review-page").innerHTML =
           '<h3>'+place.name+'</h3>'
           +'<br><br>'+reviewString;*/
-        //document.getElementById("review-page").style.display = "inline";
+        document.getElementById("review-page").style.display = "inline";
         window.alert("Accessed review function");
+        google.maps.event.addListener(map, 'click', function() {
+          document.getElementById("review-page").style.display = "none";
+        });
         //document.getElementById("review-page").innerHTML = 'The place is ' + place.name;
         //return reviewString;
       }
 
       function callback(results, status) {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
-          /*if(results.length==0)
-            alert();*/
+          if(results.length==0)
+            window.alert("No results were found. Please try a larger radius or a different service type.");
           for (var i = 0; i < results.length; i++) {
             var service = new google.maps.places.PlacesService(map); //delete var?
             var place = results[i];
