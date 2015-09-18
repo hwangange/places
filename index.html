@@ -131,12 +131,6 @@
       // Browser doesn't support Geolocation
       handleNoGeolocation(false);
     }
-
-    var calculate = function() {
-      calcRoute();
-    };
-    document.getElementById("dest").addEventListener("change", calculate);
-    document.getElementById("pos").addEventListener("change", calculate);
   }
 
   function handleNoGeolocation(errorFlag) {
@@ -353,6 +347,13 @@
           infowindow.setContent(contentString);
           dest = marker.position; //fishy
           destPlace = place;
+
+          var calculate = function() {
+            calcRoute();
+          };
+
+          google.maps.event.addListener(dest, 'change', calculate());
+          google.maps.event.addListener(pos, 'change', calculate());
 
           //customization
           // Reference to the DIV that wraps the bottom of infowindow
