@@ -12,12 +12,12 @@
   html, body {
     height: 100%;
     padding: 0;
-    margin: 0;
 
   }
 
   #map-canvas {
-    height: 800px;
+    height: 100%;
+    width: 80%;
   }
 
   body {
@@ -154,7 +154,11 @@
     var start = pos;
     var end = dest;
 
+    //document.getElementById("map-canvas").style.float = "left";
+    document.getElementById("map-canvas").style.width = "60%";
     document.getElementById("right-panel").style.display = "inline";
+    //document.getElementById("right-panel").style.float = ""
+    document.getElementById("right-panel").style.width = "30%";
 
     var request = {
       origin:start,
@@ -446,8 +450,8 @@
 
       // window.onload = loadScript;
       </script>
-      <div class="container" id="right-panel"></div>
       <div class="container" id="map-canvas"></div>
+      <div class="container" id="right-panel"></div>
       <div class="container" id="review-page"></div>
   </body>
   </html>
