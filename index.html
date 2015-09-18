@@ -334,7 +334,7 @@
           +'<div class="iw-content"><p style="margin-top:0.37em;margin-bottom:0.37em"><b>Address: </b>'+place.vicinity+'</p>'
           +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Rating: </b>'+place.rating+'/5.0</p>'
          // +'<p style="display:none" id="selected-address" value=<code>place.vicinity</code>>'+place.formatted_address+'</p>'
-          +'<ul id = "button-menu">'
+          +'<ul id = "button-menu" style = "padding:5%">'
           +'<li><input type="button" style="display: inline" id="reviewBtn" value="View Reviews" class="btn btn-success btn-sm" onclick="review()"></li>'//</div>'
           +'<li><input type="button" style="display: inline" id="directionsBtn" value="Directions" class="btn btn-success btn-sm" onclick="calcRoute()"></li></div></div>'
           +'<div class="iw-bottom-gradient"></div></div>'; //semicolon added
@@ -450,8 +450,10 @@
 
       // window.onload = loadScript;
       </script>
-      <div class="container" id="map-canvas"></div>
-      <div class="container" id="right-panel"></div>
-      <div class="container" id="review-page"></div>
+      <div class = "container" id="map-direction-panel" style="padding:1%">
+        <div id="map-canvas"></div>
+        <div id="right-panel"></div>
+      </div>
+      <div class="container" id="review-page" style = "padding:3% 0 3% 0"></div>
   </body>
   </html>
