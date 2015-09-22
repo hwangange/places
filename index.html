@@ -107,9 +107,9 @@
       });
     });
 
-    $(function() {
+    /*$(function() {
       $( "#tabs").tabs();
-    });
+    });*/
 
     $("#myBtn").click(function(event){
       event.preventDefault();
@@ -383,9 +383,9 @@
 
         var contentString =
         '<div id="tabs">'
-            +'<ul>'
-              +'<li><a href="#tabs-1">Tab 1</a></li>'
-              +'<li><a href = "#tabs-2">Tab 2</a></li>'
+            +'<ul class = "nav nav-tabs">'
+              +'<li role = "presentation" class = "active"><a href="#tabs-1">Tab 1</a></li>'
+              +'<li role = "presentation"><a href = "#tabs-2">Tab 2</a></li>'
             +'</ul>'
             +'<div id = "tabs-1">'
               +'<div id="iw-container" class="gm-style-iw" style="margin-top:0.37em;margin-bottom:0.37em">'
@@ -420,21 +420,23 @@
           dest = marker.position; //fishy
           destPlace = place;
 
+           google.maps.event.addListener(infowindow, 'domready', function() {
+             // Reference to the DIV that wraps the bottom of infowindow
+             var iwOuter = $('.gm-style-iw');
+
+             /* Since this div is in a position prior to .gm-div style-iw.
+              * We use jQuery and create a iwBackground variable,
+              * and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
+             */
+             var iwBackground = iwOuter.prev();
+
+             // Removes background shadow DIV
+             iwBackground.children(':nth-child(2)').css({'display' : 'none'});
+
+             // Removes white background DIV
+             iwBackground.children(':nth-child(4)').css({'display' : 'none'});
+           });
           //customization
-          // Reference to the DIV that wraps the bottom of infowindow
-        //  var iwOuter = $('.gm-style-iw');
-
-          /* Since this div is in a position prior to .gm-div style-iw.
-           * We use jQuery and create a iwBackground variable,
-           * and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
-          */
-      //    var iwBackground = iwOuter.prev();
-
-          // Removes background shadow DIV
-      //    iwBackground.children(':nth-child(2)').css({'display' : 'none'});
-
-          // Removes white background DIV
-    //      iwBackground.children(':nth-child(4)').css({'display' : 'none'});
 
           // Moves the infowindow 115px to the right.
         /*  iwOuter.parent().parent().css({left: '115px'});
