@@ -370,25 +370,31 @@
           infowindow.close();
         });*/
 
-        var contentString = '<div id="tabs">'
-          +'<ul>'
-            +'<li><a href="#tabs-1">Tab 1</a></li>'
-            +'<li><a href = "#tabs-2">Tab 2</a></li>'
-            +'<li><a href = "#tabs-3">Tab 3</a></li>'
-          +'</ul>'
-          +'<div id = "tabs-1"'
-            +'<div id="iw-container" class="gm-style-iw" style="margin-top:0.37em;margin-bottom:0.37em">'
-              + '<h1 class="iw-title" style="font-size:90%"><b>'+place.name+'</b></h1>'
-              +'<div class="iw-content"><p style = "margin-top: 0.37em;  margin-bottom: 0.37em"><b>Address: </b>'+place.vicinity+'</p>'
-              +'<p style = "margin-top : 0.37em; margin-bottom : 0.37em"><b>Rating: </b>'+place.rating+'/5.0</p>'
-         // +'<p style="display:none" id="selected-address" value=<code>place.vicinity</code>>'+place.formatted_address+'</p>'
-              +'<ul id = "button-menu" style = "padding:5%">'
-                +'<li><input type="button" style="display: inline" id="reviewBtn" value="View Reviews" class="btn btn-success btn-sm" onclick="review()"></li>'//</div>'
-                +'<li><input type="button" style="display: inline" id="directionsBtn" value="Directions" class="btn btn-success btn-sm" onclick="calcRoute()"></li>'
-              +'</ul>'
+        var contentString =
+        '<div id="tabs">'
+            +'<ul>'
+              +'<li><a href="#tabs-1">Tab 1</a></li>'
+              +'<li><a href = "#tabs-2">Tab 2</a></li>'
+            +'</ul>'
+            +'<div id = "tabs-1">'
+              +'<div id="iw-container" class="gm-style-iw" style="margin-top:0.37em;margin-bottom:0.37em">'
+                + '<h1 class="iw-title" style="font-size:90%"><b>'+place.name+'</b></h1>'
+                +'<div class="iw-content"><p style = "margin-top: 0.37em;  margin-bottom: 0.37em"><b>Address: </b>'+place.vicinity+'</p>'
+                +'<p style = "margin-top : 0.37em; margin-bottom : 0.37em"><b>Rating: </b>'+place.rating+'/5.0</p>'
+           // +'<p style="display:none" id="selected-address" value=<code>place.vicinity</code>>'+place.formatted_address+'</p>'
+                +'<ul id = "button-menu" style = "padding:5%">'
+                  +'<li><input type="button" style="display: inline" id="reviewBtn" value="View Reviews" class="btn btn-success btn-sm" onclick="review()"></li>'//</div>'
+                  +'<li><input type="button" style="display: inline" id="directionsBtn" value="Directions" class="btn btn-success btn-sm" onclick="calcRoute()"></li>'
+                +'</ul>'
+              +'</div>'
             +'</div>'
-          +'</div>'
-        +'<div class="iw-bottom-gradient"></div></div></div>'; //semicolon added
+
+            +'<div id = "tabs-2">'
+              +'<p style = "margin-top : 0.37em; margin-bottom : 0.37em"><b>Rating: </b>' + place.rating + '/5.0</p>'
+            +'</div>'
+            
+            +'<div class="iw-bottom-gradient"></div>'
+          +'</div>'; //semicolon added
       //+'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Reviews: </b>'+review(place)+</p>'
         //  +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Place ID: </b>'+place.place_id+'</p></div>';
         //  +'<p style="margin-top:0.37em;margin-bottom:0.37em;text-alignment:center"><a href = "https://maps.google.com?saddr=Current+Location&daddr='+ary[2]+'">Click for Directions</a></p></div>';
