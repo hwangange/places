@@ -80,7 +80,7 @@
       $("review-page").fadeIn(3000);
     });*/
 
-    $(function() {
+    /*$(function() {
       function runEffect() {
         var options = { percent: 100 };
         $( "#right-panel").show("scale", options, 500, callback);
@@ -94,6 +94,17 @@
         runEffect();
       });
       $("#right-panel").hide();
+    });*/
+
+    $(function() {
+      function runEffect() {
+        var options = { percent: 100 };
+        $( "right-panel").toggle("scale", options, 500);
+      };
+
+      $("directionsBtn").click(function() {
+        runEffect();
+      });
     });
 
     $(function() {
@@ -392,7 +403,7 @@
             +'<div id = "tabs-2">'
               +'<p style = "margin-top : 0.37em; margin-bottom : 0.37em"><b>Rating: </b>' + place.rating + '/5.0</p>'
             +'</div>'
-            
+
             +'<div class="iw-bottom-gradient"></div>'
           +'</div>'; //semicolon added
       //+'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Reviews: </b>'+review(place)+</p>'
