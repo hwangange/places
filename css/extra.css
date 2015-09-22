@@ -42,7 +42,7 @@ nav a {
 
 #right-panel {
   margin: 0;
-  display: none;
+  /*display: none;*/
   border-radius: 10px;
   float: right;
   overflow: scroll;
@@ -100,7 +100,7 @@ ul#button-menu li input:hover {
         font-family: Arial;
         border: 1px solid #ccc;
         box-shadow: 0 2px 2px rgba(33, 33, 33, 0.4);
-        display: none;
+        /*display: none;*/
       }
 
       @media print {
@@ -159,6 +159,7 @@ span.customStyleSelectBox.changed {
 #map-canvas img {
     max-width: none !important;
 }
+*/
 .gm-style-iw {
     width: 350px !important;
     top: 15px !important;
@@ -167,7 +168,7 @@ span.customStyleSelectBox.changed {
     box-shadow: 0 1px 6px rgba(178, 178, 178, 0.6);
     border: 1px solid rgba(72, 181, 233, 0.6);
     border-radius: 2px 2px 10px 10px;
-} */
+} 
 
 #iw-container {
     margin-bottom: 10px;
