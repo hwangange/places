@@ -47,9 +47,15 @@
   </style>
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
 
   <script>
+
+  // before above script tag <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  
   // Note: This example requires that you consent to location sharing when
   // prompted by your browser. If you see a blank space instead of the map, this
   // is probably because you have denied permission for location sharing.
@@ -384,12 +390,12 @@
             +'<div id = "tabs-1">'
               +'<div id="iw-container" class="gm-style-iw" style="margin-top:0.37em;margin-bottom:0.37em">'
                 + '<h1 class="iw-title" style="font-size:90%"><b>'+place.name+'</b></h1>'
-                +'<div class="iw-content"><p style = "margin-top: 0.37em;  margin-bottom: 0.37em"><b>Address: </b>'+place.vicinity+'</p>'
+                +'<div class="iw-content"><p style = "margin-top: 0.37em;  margin-bottom: 0.37e m"><b>Address: </b>'+place.vicinity+'</p>'
                 +'<p style = "margin-top : 0.37em; margin-bottom : 0.37em"><b>Rating: </b>'+place.rating+'/5.0</p>'
            // +'<p style="display:none" id="selected-address" value=<code>place.vicinity</code>>'+place.formatted_address+'</p>'
                 +'<ul id = "button-menu" style = "padding:5%">'
                   +'<li><input type="button" style="display: inline" id="reviewBtn" value="View Reviews" class="btn btn-success btn-sm" onclick="review()"></li>'//</div>'
-                  +'<li><input type="button" style="display: inline" id="directionsBtn" value="Directions" class="btn btn-success btn-sm" onclick="calcRoute()"></li>'
+                  +'<li><input type="button" style="display: inline" id="directionsBtn" value="Directions" class="btn btn-success btn-sm" onclick="calcRoute()"></li>' //onclick should change display of right panel
                 +'</ul>'
               +'</div>'
             +'</div>'
