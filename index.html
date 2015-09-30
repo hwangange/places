@@ -48,14 +48,15 @@
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
-  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
 
   <script>
 
+  //committed   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script> --> bug?
+
+
   // before above script tag <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-  
+
   // Note: This example requires that you consent to location sharing when
   // prompted by your browser. If you see a blank space instead of the map, this
   // is probably because you have denied permission for location sharing.
@@ -382,7 +383,18 @@
         });*/
 
         var contentString =
+
         '<div id="tabs">'
+            +'<ul>'
+              +'<li><a href="#tabs-1">Tab 1</a></li>'
+              +'<li><a href = "#tabs-2">Tab 2</a></li>'
+            +'</ul>'
+            +'<div id = "tabs-1"></div>'
+            +'<div id = "tabs-2"></div>'
+        +'</div>';
+
+
+        /*'<div id="tabs">'
             +'<ul>'
               +'<li><a href="#tabs-1">Tab 1</a></li>'
               +'<li><a href = "#tabs-2">Tab 2</a></li>'
@@ -405,7 +417,11 @@
             +'</div>'
 
             +'<div class="iw-bottom-gradient"></div>'
-          +'</div>'; //semicolon added
+          +'</div>'; */
+
+
+
+          //semicolon added
       //+'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Reviews: </b>'+review(place)+</p>'
         //  +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Place ID: </b>'+place.place_id+'</p></div>';
         //  +'<p style="margin-top:0.37em;margin-bottom:0.37em;text-alignment:center"><a href = "https://maps.google.com?saddr=Current+Location&daddr='+ary[2]+'">Click for Directions</a></p></div>';
