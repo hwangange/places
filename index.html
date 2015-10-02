@@ -66,43 +66,6 @@
     $("#site-title").fadeIn(2000);
     $("#site-slogan").fadeIn(3000);
   });
-    //$("#reviewBtn").click(function(event){
-      /*event.preventDefault();
-      var x = $("#selected-address").val();
-      review(x);*/
-      //$("#review-page").fadeIn(1000);
-  /*    alert("Review button was clicked.");
-    });
-
-    $("#directionsBtn").click(function(event){
-      alert("Directions button was clicked.");
-    }; */
-
-  /*  $("#directionsBtn").click(function(event){
-      $("right-panel").css({"display": "inline"});
-      $("right-panel").fadeIn(3000);
-    });
-
-    $("#reviewBtn").click(function(event){
-      $("review-page").css({"display": "inline"});
-      $("review-page").fadeIn(3000);
-    });*/
-
-    /*$(function() {
-      function runEffect() {
-        var options = { percent: 100 };
-        $( "#right-panel").show("scale", options, 500, callback);
-      };
-      function callback() {
-        setTimeout(function() {
-          $( "#right-panel:visible").removeAttr("style").fadeOut();
-        }, 1000);
-      };
-      $("directionsBtn").click(function() {
-        runEffect();
-      });
-      $("#right-panel").hide();
-    });*/
 
       $("directionsBtn").click(function() {
         $("right-panel").fadeIn("slow");
@@ -124,6 +87,44 @@
   /*  $(".close").click(function(){ //close method closes alert message
       $("#alert").alert("close");*/
   //});
+
+  //$("#reviewBtn").click(function(event){
+    /*event.preventDefault();
+    var x = $("#selected-address").val();
+    review(x);*/
+    //$("#review-page").fadeIn(1000);
+/*    alert("Review button was clicked.");
+  });
+
+  $("#directionsBtn").click(function(event){
+    alert("Directions button was clicked.");
+  }; */
+
+/*  $("#directionsBtn").click(function(event){
+    $("right-panel").css({"display": "inline"});
+    $("right-panel").fadeIn(3000);
+  });
+
+  $("#reviewBtn").click(function(event){
+    $("review-page").css({"display": "inline"});
+    $("review-page").fadeIn(3000);
+  });*/
+
+  /*$(function() {
+    function runEffect() {
+      var options = { percent: 100 };
+      $( "#right-panel").show("scale", options, 500, callback);
+    };
+    function callback() {
+      setTimeout(function() {
+        $( "#right-panel:visible").removeAttr("style").fadeOut();
+      }, 1000);
+    };
+    $("directionsBtn").click(function() {
+      runEffect();
+    });
+    $("#right-panel").hide();
+  });*/
 
 
   var map;
@@ -383,15 +384,30 @@
         });*/
 
         var contentString =
-
-        '<div id="tabs">'
-            +'<ul>'
-              +'<li><a href="#tabs-1">Tab 1</a></li>'
-              +'<li><a href = "#tabs-2">Tab 2</a></li>'
-            +'</ul>'
-            +'<div id = "tabs-1"></div>'
-            +'<div id = "tabs-2"></div>'
+        '<div id="iw-container" class="gm-style-iw" style="margin-top:0.37em;margin-bottom:0.37em">'
+          + '<h1 class="iw-title" style="font-size:90%"><b>'+place.name+'</b></h1>'
+          +'<div class="iw-content"><p style = "margin-top: 0.37em;  margin-bottom: 0.37e m"><b>Address: </b>'+place.vicinity+'</p>'
+          +'<p style = "margin-top : 0.37em; margin-bottom : 0.37em"><b>Rating: </b>'+place.rating+'/5.0</p>'
+     // +'<p style="display:none" id="selected-address" value=<code>place.vicinity</code>>'+place.formatted_address+'</p>'
+          +'<ul id = "button-menu" style = "padding:5%">'
+            +'<li><input type="button" style="display: inline" id="reviewBtn" value="View Reviews" class="btn btn-success btn-sm" onclick="review()"></li>'//</div>'
+            +'<li><input type="button" style="display: inline" id="directionsBtn" value="Directions" class="btn btn-success btn-sm" onclick="calcRoute()"></li>' //onclick should change display of right panel
+          +'</ul>'
         +'</div>';
+
+
+
+
+        /*'<div id="tabs">'
+          +'<div class="container">'
+              +'<ul>'
+                +'<li><a href="#tabs1">Tab 1</a></li>'
+                +'<li><a href = "#tabs2">Tab 2</a></li>'
+              +'</ul>'
+              +'<div id = "tabs1"></div>'
+              +'<div id = "tabs2"></div>'
+          +'</div>'
+        +'</div>';*/
 
 
         /*'<div id="tabs">'
