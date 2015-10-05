@@ -146,12 +146,12 @@
     directionsDisplay.setMap(map);
     directionsDisplay.setPanel(document.getElementById('right-panel'));
 
-    var calculate = function() {
+  /*  var calculate = function() {
       calcRoute();
     };
 
     //google.maps.event.addListener(dest, 'change', calculate());
-    google.maps.event.addListener(pos, 'change', calculate());
+    google.maps.event.addListener(pos, 'change', calculate());*/
 
     // Try HTML5 geolocation
     if(navigator.geolocation) {
@@ -455,22 +455,29 @@
           dest = marker.position; //fishy
           destPlace = place;
 
-           google.maps.event.addListener(infowindow, 'domready', function() {
+          var calculate = function() {
+            calcRoute();
+          }
+
+          google.maps.event.addListener(dest,'change', calculate());
+          google.maps.event.addListener(pos,'change', caluculate());
+
+          // google.maps.event.addListener(infowindow, 'domready', function() {
              // Reference to the DIV that wraps the bottom of infowindow
-             var iwOuter = $('.gm-style-iw');
+            // var iwOuter = $('.gm-style-iw');
 
              /* Since this div is in a position prior to .gm-div style-iw.
               * We use jQuery and create a iwBackground variable,
               * and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
              */
-             var iwBackground = iwOuter.prev();
+             //var iwBackground = iwOuter.prev();
 
              // Removes background shadow DIV
-             iwBackground.children(':nth-child(2)').css({'display' : 'none'});
+             //iwBackground.children(':nth-child(2)').css({'display' : 'none'});
 
              // Removes white background DIV
-             iwBackground.children(':nth-child(4)').css({'display' : 'none'});
-           });
+             /*iwBackground.children(':nth-child(4)').css({'display' : 'none'});
+           });*/
           //customization
 
           // Moves the infowindow 115px to the right.
