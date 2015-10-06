@@ -43,7 +43,7 @@ nav a {
 #right-panel {
   margin: auto;
   display: none;
-  border-radius: 10px;
+  border-radius: 5px;
   float: right;
   overflow: scroll;
   height: 100%;

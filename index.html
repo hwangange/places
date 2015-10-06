@@ -24,11 +24,6 @@
     background: #accbe8 url("img/half-tree.png") no-repeat fixed right;
   }
 
-  .center {
-    margin: auto;
-    width: 100%;
-  }
-
   </style>
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -49,7 +44,7 @@
       review(x);*/
       //$("#review-page").fadeIn(1000);
   /*    alert("Review button was clicked.");
-    });
+});f
 
     $("#directionsBtn").click(function(event){
       alert("Directions button was clicked.");
@@ -352,7 +347,7 @@
             calcRoute();
           };
 
-          google.maps.event.addListener(dest, 'change', calculate());
+          //google.maps.event.addListener(dest, 'change', calculate());
           google.maps.event.addListener(pos, 'change', calculate());
 
           //customization
@@ -446,8 +441,10 @@
 
       // window.onload = loadScript;
       </script>
-      <div class="container" id="right-panel"></div>
-      <div class="container" id="map-canvas"></div>
+      <div class = "container-fluid">
+        <div id="right-panel"></div>
+        <div id="map-canvas"></div>
+      </div>
       <div class="container" id="review-page"></div>
   </body>
   </html>
