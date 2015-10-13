@@ -187,9 +187,13 @@
   </script>
 </head>
 <body bgcolor="#accbe8">
-  <div class="container">
+  <div class="container map-page">
     <header class="page-header">
       <h1><b id="site-title" style="display:none">Birdee   </b> <small><i id="site-slogan" style="display:none">  travel made easy</i></small></h1>
+        <ul class = "nav nav-pills">
+          <li role = "presentation" class = "active"><a href="#map-page">Map</a></li>
+          <li role = "presentation"><a href="#review">Tab 2</a></li>
+        </ul>
     </header>
     <div class = "alert alert-danger fade in" id="alert">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -509,10 +513,12 @@
 
       // window.onload = loadScript;
       </script>
-      <div class = "container" id="map-direction-panel" style="padding:1%">
-        <div id="map-canvas"></div>
-        <div id="right-panel"></div>
+      <div class="map-page">
+        <div class = "container" id="map-direction-panel" style="padding:1%">
+          <div id="map-canvas"></div>
+          <div id="right-panel"></div>
+        </div>
+        <div class="container" id="review-page" style = "padding:3% 0 3% 0"></div>
       </div>
-      <div class="container" id="review-page" style = "padding:3% 0 3% 0"></div>
   </body>
   </html>
