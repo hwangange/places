@@ -67,6 +67,19 @@ ul#button-menu li input:hover {
   color: #99FFCC;
 }
 
+/*** LINKS ***/
+a {
+  color: ##00CC66;
+}
+
+nav a, nav a:visited {
+  color: #fff;
+}
+
+nav a.selected, nav a:hover {
+  color: #006633;
+}
+
 
 
 /****RIGHT PANEL ****/
