@@ -187,7 +187,7 @@
   </script>
 </head>
 <body bgcolor="#accbe8">
-  <div class="container map-page">
+  <div class="container">
     <header class="page-header">
       <h1><b id="site-title" style="display:none">Birdee   </b> <small><i id="site-slogan" style="display:none">  travel made easy</i></small></h1>
         <ul class = "nav nav-pills">
@@ -195,44 +195,45 @@
           <li role = "presentation"><a href="#review">Tab 2</a></li>
         </ul>
     </header>
-    <div class = "alert alert-danger fade in" id="alert">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        <strong>Sorry!</strong> No results were returned from your search.
-    </div>
-    <span class="dropdown center" style="display:inline">
-      <h3 style="display:inline-block"><small>I am searching for </small></h3>
-      <select name="What are you looking for?" id="selected">
-        <option value="lodging">Lodging</option>
-        <option value="food">Food</option>
-        <option value="airport">Airport</option>
-        <option value="hotel">Hotel</option>
-        <option value="atm">ATM</option>
-        <option value="bank">Bank</option>
-        <option value="bus_station">Bus Station</option>
-        <option value="taxi_stand">Taxi</option>
-        <option value="train_stand">Train</option>
-        <option value="cafe">Cafe</option>
-        <option value="gas_station">Gas Station</option>
-        <option value="clothing_store">Clothing</option>
-      </select>
-    </span>
-    <span class="dropdown center" style="display:inline">
-      <h3 style="display:inline-block"><small>within</small></h3>
-      <select id="radius-selected">
-        <option value="500">500</option>
-        <option value="1000">1000</option>
-        <option value="2000">2000</option>
-        <option value="5000">5000</option>
-        <option value="7500">7500</option>
-      </select>
-      <h3 style="display:inline"><small>meters.</small></h3>
+    <div class="tab-pane fade in active" id="map-page">
+      <div class = "alert alert-danger fade in" id="alert">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong>Sorry!</strong> No results were returned from your search.
+      </div>
+      <span class="dropdown center" style="display:inline">
+        <h3 style="display:inline-block"><small>I am searching for </small></h3>
+        <select name="What are you looking for?" id="selected">
+          <option value="lodging">Lodging</option>
+          <option value="food">Food</option>
+          <option value="airport">Airport</option>
+          <option value="hotel">Hotel</option>
+          <option value="atm">ATM</option>
+          <option value="bank">Bank</option>
+          <option value="bus_station">Bus Station</option>
+          <option value="taxi_stand">Taxi</option>
+          <option value="train_stand">Train</option>
+          <option value="cafe">Cafe</option>
+          <option value="gas_station">Gas Station</option>
+          <option value="clothing_store">Clothing</option>
+        </select>
+      </span>
+      <span class="dropdown center" style="display:inline">
+        <h3 style="display:inline-block"><small>within</small></h3>
+        <select id="radius-selected">
+          <option value="500">500</option>
+          <option value="1000">1000</option>
+          <option value="2000">2000</option>
+          <option value="5000">5000</option>
+          <option value="7500">7500</option>
+        </select>
+        <h3 style="display:inline"><small>meters.</small></h3>
+        <br>
+        <input type="submit" id="myBtn" value="Submit" class="btn btn-success btn-sm">
+        <p id="demo"></p>
+      </span>
       <br>
-      <input type="submit" id="myBtn" value="Submit" class="btn btn-success btn-sm">
-      <p id="demo"></p>
-    </span>
-    <br>
-
     </div>
+  </div>
       <script>
       </script>
       <script>
@@ -513,12 +514,15 @@
 
       // window.onload = loadScript;
       </script>
-      <div class="map-page">
+      <div id="map-page" class="tab-pane fade in active">
         <div class = "container" id="map-direction-panel" style="padding:1%">
           <div id="map-canvas"></div>
           <div id="right-panel"></div>
         </div>
         <div class="container" id="review-page" style = "padding:3% 0 3% 0"></div>
+      </div>
+      <div id="review" class = "tab-pane fade">
+        <h3>Review</h3>
       </div>
   </body>
   </html>
