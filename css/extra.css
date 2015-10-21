@@ -42,8 +42,9 @@ nav a {
 
 #right-panel {
   margin: auto;
+  padding: 1%;
   display: none;
-  border-radius: 5px;
+  border-radius: 10px;
   float: right;
   overflow: scroll;
   height: 100%;
@@ -60,10 +61,7 @@ ul#button-menu {
 
 ul#button-menu li {
   display: inline;
-}
-
-ul#button-menu li input:hover {
-  color: #99FFCC;
+  margin: 1%;
 }
 
 
@@ -87,6 +85,7 @@ ul#button-menu li input:hover {
         float: right;
         width: 390px;
         overflow: auto;
+        margin: 1%;
       }
 
       #map {
