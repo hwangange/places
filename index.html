@@ -348,13 +348,6 @@
           dest = marker.position; //fishy
           destPlace = place;
 
-          /*var calculate = function() {
-            calcRoute();
-          };
-
-          google.maps.event.addListener(dest, 'change', calculate());
-          google.maps.event.addListener(pos, 'change', calculate());*/
-
           //customization
           // Reference to the DIV that wraps the bottom of infowindow
         //  var iwOuter = $('.gm-style-iw');
@@ -446,8 +439,10 @@
 
       // window.onload = loadScript;
       </script>
-      <div class="container" id="right-panel"></div>
-      <div class="container" id="map-canvas"></div>
+      <div class = "container">
+        <div id="right-panel"></div>
+        <div id="map-canvas"></div>
+      </div>
       <div class="container" id="review-page"></div>
   </body>
   </html>
