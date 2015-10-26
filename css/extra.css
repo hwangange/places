@@ -31,15 +31,6 @@ nav a {
   padding: 15px 10px;
 }
 
-#review-page {
-  margin: auto;
-  border-radius: 25px;
-  border-style: solid;
-  border-color: #6ab47b;
-  background: #ffffff;
-}
-
-
 #right-panel {
   margin: auto;
   padding: 1%;
@@ -118,7 +109,7 @@ footer {
   font-size: 0.75em;
   text-align: center;
   clear: both;
-  padding-top: 50px;
+  padding-top: 30px;
   color: #ccc;
 }
 
