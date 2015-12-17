@@ -1,9 +1,23 @@
+html, body {
+  max-width: 100%;
+  width: 100%;
+  height: 100%;
+  padding: none;
+  margin: 0;
+}
+
 body {
   font-family: 'Nunito', sans-serif;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: none;
+  max-width: 100vw;
+  position: relative;
 }
 
 
-h1{
+.navbar h1{
   font-family: 'Biryani', sans-serif;
   margin: 15px 0;
   font-size: 2em;
@@ -31,6 +45,34 @@ nav a {
   padding: 15px 10px;
 }
 
+/** Main **/
+#main {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 2;
+}
+
+#mask {
+  height: 100vh;
+  width: 100vw;
+  max-width: 100%;
+  background: rgba(100,149,237, 0.6);
+  z-index: 0;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  left: 0;
+}
+
+#main h1 {
+  font-size: 6em;
+}
+
 #right-panel {
   margin: auto;
   padding: 1%;
@@ -55,6 +97,32 @@ ul#button-menu li {
   margin: 1%;
 }
 
+/*** map canvas ***/
+#map-canvas {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  max-width: 100%;
+}
+
+/** result list **/
+#result-list {
+  display: none;
+  max-height: 100%;
+  height: 100vh;
+  width: 50vw;
+  max-width: 50%;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding-top: 50px;
+  background-color: red;
+
+}
 
 
 /****RIGHT PANEL ****/

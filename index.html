@@ -17,12 +17,15 @@
   }
 
   #map-canvas {
-    height: 800px;
+    height: 100vh;
+    width: 100vw;
+    z-index: -2;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
   }
 
-  body {
-    background: #accbe8 url("img/half-tree.png") no-repeat fixed right;
-  }
 
   .center {
     margin: auto;
@@ -71,9 +74,17 @@
 
     $("#myBtn").click(function(event){
       event.preventDefault();
+      var x = $('#selected').val();
+      $('#mask').fadeOut();
+      $('#main').fadeOut();
+      $('#result-list').fadeIn();
+  /*    $('#selection').innerHTML() = x;
+      $('#location-selection').innerHTML() = "Sugar Land"; */
+      $('#map-canvas').css('width','50vw');
+      $('#map-canvas').css('z-index','1');
       //var x = $("#selected").val();
-      var x = $("#selected").val();
-      var y = $("#radius-selected").val();
+
+      var y = 5000;
       $("#demo").innerHTML = x;
       initialize();
       search(x, y);
@@ -186,7 +197,7 @@
   </script>
 </head>
 <body bgcolor="#accbe8">
-    <nav class="navbar navbar-default navbar-fixed-top" style = "padding: 10px; background: #6ab47b; border-color: #599a68">
+    <nav class="navbar navbar-default navbar-fixed-top" style = "margin-bottom: 2cm; background: #6ab47b; border-color: #599a68">
       <div class = "container">
         <h1><b id="site-title" style="display:none">Birdee   </b> <small><i id="site-slogan" style="display:none">  travel made easy</i></small></h1>
       </div>
@@ -195,10 +206,12 @@
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <strong>Sorry!</strong> No results were returned from your search.
     </div>
-  <div class = "container" style = "margin-top: 75px">
+
+  <div id = "main" class = "container-fluid">
+    <h1>Birdee</h1>
     <span class="dropdown center" style="display:inline">
-      <h3 style="display:inline-block"><small>I am searching for </small></h3>
       <select name="What are you looking for?" id="selected">
+        <option selected = "selected">I'm looking for ... </option>
         <option value="lodging">Lodging</option>
         <option value="food">Food</option>
         <option value="airport">Airport</option>
@@ -214,22 +227,16 @@
       </select>
     </span>
     <span class="dropdown center" style="display:inline">
-      <h3 style="display:inline-block"><small>within</small></h3>
-      <select id="radius-selected">
-        <option value="500">500</option>
-        <option value="1000">1000</option>
-        <option value="2000">2000</option>
-        <option value="5000">5000</option>
-        <option value="7500">7500</option>
-      </select>
-      <h3 style="display:inline"><small>meters.</small></h3>
-      <br>
-      <input type="submit" id="myBtn" value="Submit" class="btn btn-success btn-sm">
+
+      <input type = "text" id = "current" placeholder = "Sugar Land">
+      <h3 style="display:inline"><small>.</small></h3>
+      <input type="submit" id="myBtn" value="Search" class="btn btn-success btn-sm" style = "margin-left: 1em">
       <p id="demo"></p>
     </span>
     <br>
 
     </div>
+
       <script>
       </script>
       <script>
@@ -341,7 +348,8 @@
          // +'<p style="display:none" id="selected-address" value=<code>place.vicinity</code>>'+place.formatted_address+'</p>'
           +'<ul id = "button-menu">'
           +'<li><input type="button" style="display: inline" id="reviewBtn" value="View Reviews" class="btn btn-success btn-sm" onclick="review()"></li>'//</div>'
-          +'<li><input type="button" style="display: inline" id="directionsBtn" value="Directions" class="btn btn-success btn-sm" onclick="calcRoute(directionsService, directionsDisplay)"></li></div></div>'
+          +'<li><input type="button" style="display: inline" id="directionsBtn" value="Directions" class="btn btn-success btn-sm" onclick="calcRoute(directionsService, directionsDisplay)"></li>'
+          +'<li><input type="button" style = "display: inline" id="revBtn" value="Write a Review" class="btn btn-success btn-sm"></li></div></div>'
           +'<div class="iw-bottom-gradient"></div></div>'; //semicolon added
       //+'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Reviews: </b>'+review(place)+</p>'
         //  +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Place ID: </b>'+place.place_id+'</p></div>';
@@ -356,49 +364,6 @@
           infowindow.setContent(contentString);
           dest = marker.position; //fishy
           destPlace = place;
-
-          //customization
-          // Reference to the DIV that wraps the bottom of infowindow
-        //  var iwOuter = $('.gm-style-iw');
-
-          /* Since this div is in a position prior to .gm-div style-iw.
-           * We use jQuery and create a iwBackground variable,
-           * and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
-          */
-      //    var iwBackground = iwOuter.prev();
-
-          // Removes background shadow DIV
-      //    iwBackground.children(':nth-child(2)').css({'display' : 'none'});
-
-          // Removes white background DIV
-    //      iwBackground.children(':nth-child(4)').css({'display' : 'none'});
-
-          // Moves the infowindow 115px to the right.
-        /*  iwOuter.parent().parent().css({left: '115px'});
-
-          // Moves the shadow of the arrow 76px to the left margin.
-          iwBackground.children(':nth-child(1)').attr('style', function(i,s){ return s + 'left: 76px !important;'});
-
-          // Moves the arrow 76px to the left margin.
-          iwBackground.children(':nth-child(3)').attr('style', function(i,s){ return s + 'left: 76px !important;'});
-
-          // Changes the desired tail shadow color.
-          iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': 'rgba(72, 181, 233, 0.6) 0px 1px 6px', 'z-index' : '1'});
-
-          // Reference to the div that groups the close button elements.
-          var iwCloseBtn = iwOuter.next();
-
-          // Apply the desired effect to the close button
-          iwCloseBtn.css({opacity: '1', right: '38px', top: '3px', border: '7px solid #48b5e9', 'border-radius': '13px', 'box-shadow': '0 0 5px #3990B9'});
-
-          // If the content of infowindow not exceed the set maximum height, then the gradient is removed.
-          if($('.iw-content').height() < 140){
-            $('.iw-bottom-gradient').css({display: 'none'});
-          }
-
-          // The API automatically applies 0.7 opacity to the button after the mouseout event. This function reverses this event to the desired value.
-          iwCloseBtn.mouseout(function(){
-            $(this).css({opacity: '1'}); */
 
           infowindow.open(map, this);
         });
@@ -448,9 +413,15 @@
 
       // window.onload = loadScript;
       </script>
-      <div class = "container" style = "margin-bottom: 1%">
+      <div class = "container-fluid">
+        <div id = "mask"></div>
         <div id="right-panel"></div>
-        <div id="map-canvas"></div>
+        <div id = "result-list" class = "container-fluid">
+          <h1>Results</h1>
+          <!--<h1>Suggestions for </h1><span id = "selection"></span><h1> near </h1><span id = "location-selection"></span> -->
+        </div>
+        <div id="map-canvas" class = "container-fluid"></div>
+
       </div>
       <div class="container" id="review-page"></div>
       <footer class = "footer" style = "background: #6ab47b">
