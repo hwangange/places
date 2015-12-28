@@ -77,7 +77,12 @@
       var x = $('#selected').val();
       $('#mask').fadeOut();
       $('#main').fadeOut();
+
+      document.getElementById('place-type').innerHTML = "&ldquo;" + $('#selected').val() + "&ldquo;";
+      document.getElementById('place-name').innerHTML = "&ldquo;" + "Sugar Land" + "&ldquo;";
+      
       $('#result-list').fadeIn();
+
   /*    $('#selection').innerHTML() = x;
       $('#location-selection').innerHTML() = "Sugar Land"; */
       $('#map-canvas').css('width','50vw');
@@ -212,23 +217,23 @@
     <span class="dropdown center" style="display:inline">
       <select name="What are you looking for?" id="selected">
         <option selected = "selected">I'm looking for ... </option>
-        <option value="lodging">Lodging</option>
-        <option value="food">Food</option>
-        <option value="airport">Airport</option>
-        <option value="hotel">Hotel</option>
-        <option value="atm">ATM</option>
-        <option value="bank">Bank</option>
-        <option value="bus_station">Bus Station</option>
-        <option value="taxi_stand">Taxi</option>
-        <option value="train_stand">Train</option>
-        <option value="cafe">Cafe</option>
-        <option value="gas_station">Gas Station</option>
-        <option value="clothing_store">Clothing</option>
+        <option value="lodging" label = "Lodging">Lodging</option>
+        <option value="food" label = "Food">Food</option>
+        <option value="airport" label = "Airport">Airport</option>
+        <option value="hotel" label = "Hotel">Hotel</option>
+        <option value="atm" label = "ATM">ATM</option>
+        <option value="bank" label = "Bank">Bank</option>
+        <option value="bus_station" label = "Bus Station">Bus Station</option>
+        <option value="taxi_stand" label = "Taxi">Taxi</option>
+        <option value="train_stand" label = "Train">Train</option>
+        <option value="cafe" label = "Cafe">Cafe</option>
+        <option value="gas_station" label = "Gas Station">Gas Station</option>
+        <option value="clothing_store" label = "Clothing">Clothing</option>
       </select>
     </span>
     <span class="dropdown center" style="display:inline">
 
-      <input type = "text" id = "current" placeholder = "Sugar Land">
+      <input type = "text" id = "current">
       <h3 style="display:inline"><small>.</small></h3>
       <input type="submit" id="myBtn" value="Search" class="btn btn-success btn-sm" style = "margin-left: 1em">
       <p id="demo"></p>
@@ -245,6 +250,7 @@
       var infowindow;
       var dest;
       var destPlace;
+
       function search(text, rad) {
         var mapOptions = {
           zoom: 15
@@ -267,34 +273,35 @@
           infowindow = new google.maps.InfoWindow();
           service = new google.maps.places.PlacesService(map);
 
-          /********* IMPORTANT ********/
           service.nearbySearch(request, callback);
-          /********* IMPORTANT ********
-          replace with
 
-          var request = {
-            placeId: 'insert id here'
-          };
-
-          service.getDetails(request,callback);
-
-          function callback(place, status) {
-            if (status == google.maps.places.PlacesServiceStatus.OK) {
-              createMarker(place);
-            }
-          }
-           */
         }
+
+
+
 
         else {
           handleNoGeolocation(false);
         }
       }
 
-      /*function alert() {
-          document.getElementById("#alert").style.visibility = visible;
-          document.getElementById("#alert").style.display = block;
-      }*/
+      function addInfo(place) {
+      	var placeLoc = place.geometry.location;
+      	var temp = document.getElementById('result-list').innerHTML;
+
+      	var html = 
+        "<div class = 'result'>" +
+      		"<h2>" + place.name + "</h2>" +
+      		"<table style = 'width: 100%'>" +
+      			"<tr>" +
+      				"<td>Hello!</td>" +
+              "<td>Bye!</td>"
+      			"</tr>" +
+      		"</table>" +
+         "</div>" ;
+
+      	document.getElementById('result-list').innerHTML = temp + html;
+      }
 
       function createMarker(place) {
         var placeLoc = place.geometry.location;
@@ -347,9 +354,7 @@
           +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Rating: </b>'+place.rating+'/5.0</p>'
          // +'<p style="display:none" id="selected-address" value=<code>place.vicinity</code>>'+place.formatted_address+'</p>'
           +'<ul id = "button-menu">'
-          +'<li><input type="button" style="display: inline" id="reviewBtn" value="View Reviews" class="btn btn-success btn-sm" onclick="review()"></li>'//</div>'
-          +'<li><input type="button" style="display: inline" id="directionsBtn" value="Directions" class="btn btn-success btn-sm" onclick="calcRoute(directionsService, directionsDisplay)"></li>'
-          +'<li><input type="button" style = "display: inline" id="revBtn" value="Write a Review" class="btn btn-success btn-sm"></li></div></div>'
+          +'<li><input type="button" style="display: inline" id="directionsBtn" value="Directions" class="btn btn-success btn-sm" onclick="calcRoute(directionsService, directionsDisplay)"></li></div></div>'
           +'<div class="iw-bottom-gradient"></div></div>'; //semicolon added
       //+'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Reviews: </b>'+review(place)+</p>'
         //  +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Place ID: </b>'+place.place_id+'</p></div>';
@@ -398,6 +403,7 @@
             }, function(place, status) {
               if (status === google.maps.places.PlacesServiceStatus.OK) { //three equals
                 createMarker(place);
+                addInfo(place);
               }
             });
           }
@@ -416,8 +422,8 @@
       <div class = "container-fluid">
         <div id = "mask"></div>
         <div id="right-panel"></div>
-        <div id = "result-list" class = "container-fluid">
-          <h1>Results</h1>
+        <div id = "result-list" class = "container-fluid" style = "overflow: scroll">
+          <h3>Results for <span id = "place-type"></span> in <span id = "place-name"></span></h3>
           <!--<h1>Suggestions for </h1><span id = "selection"></span><h1> near </h1><span id = "location-selection"></span> -->
         </div>
         <div id="map-canvas" class = "container-fluid"></div>
