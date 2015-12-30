@@ -47,30 +47,10 @@
   // is probably because you have denied permission for location sharing.
 
   $(document).ready(function(){
-    //$("#site-title").css({"visibility": "visible"});
+   
     $("#site-title").fadeIn(2000);
     $("#site-slogan").fadeIn(3000);
-    //$("#reviewBtn").click(function(event){
-      /*event.preventDefault();
-      var x = $("#selected-address").val();
-      review(x);*/
-      //$("#review-page").fadeIn(1000);
-  /*    alert("Review button was clicked.");
-    });
-
-    $("#directionsBtn").click(function(event){
-      alert("Directions button was clicked.");
-    }; */
-
-  /*  $("#directionsBtn").click(function(event){
-      $("right-panel").css({"display": "inline"});
-      $("right-panel").fadeIn(3000);
-    });
-
-    $("#reviewBtn").click(function(event){
-      $("review-page").css({"display": "inline"});
-      $("review-page").fadeIn(3000);
-    });*/
+ 
 
     $("#myBtn").click(function(event){
       event.preventDefault();
@@ -91,8 +71,11 @@
 
       var y = 5000;
       $("#demo").innerHTML = x;
-      initialize();
-      search(x, y);
+      
+      /*search(x, y); */
+
+      yoh.getYelp(x);
+
     });
   /*  $(".close").click(function(){ //close method closes alert message
       $("#alert").alert("close");*/
@@ -107,8 +90,24 @@
   var directionsDisplay;
   var directionsService;
 
-  function initialize() {
+  //declaire namespace
+  var yoh = {};
+
+  var yelp = [];
+  var bounds;
+  var infowindow_yelp = new google.maps.InfoWindow();
+
+  function trace(message) { /*trace function for debugging*/
+    if(typeof console != 'undefined')
+    {
+      console.log(message);
+    }
+  }
+
+  yoh.initialize = function(){
     //directionsDisplay = new google.maps.DirectionsRenderer;
+
+
     directionsDisplay = new google.maps.DirectionsRenderer();
     directionsService = new google.maps.DirectionsService();
     var mapOptions = {
@@ -197,11 +196,61 @@
     });
   }
 
-  google.maps.event.addDomListener(window, 'load', initialize);
+
+
+
+  yoh.getYelp = function(term) {
+    bounds = new google.maps.LatLngBounds();
+    $.getJSON('http://api.yelp.com/business_review_search?lat='+map.getCenter().lat()+'&long='+map.getCenter().lng()+'&limit=20&ywsid=2kwa_4JCIn9-rK4iiJ6_VA&term='+term+'&callback=?',
+        function(data)
+        {
+            $.each(data.businesses, function(i,item){
+                infowindowcontent = '<strong>'+item.name+'</strong><br>';
+                infowindowcontent += '<img src="'+item.photo_url+'"><br>';
+                infowindowcontent += '<a href="'+item.url+'" target="_blank">see it on yelp</a>';
+                
+                yoh.createYelpMarker(i,item.latitude,item.longitude,item.name, infowindowcontent);
+            });                 
+        }
+    );
+  }
+
+  //Function to create yelp marker
+yoh.createYelpMarker = function(i,latitude,longitude,title, infowindowcontent)
+{
+    var markerLatLng = new google.maps.LatLng(latitude,longitude);  
+    
+    //extent bounds for each stop and adjust map to fit to it
+    bounds.extend(markerLatLng);
+    map.fitBounds(bounds);
+
+    yelp[i] = new google.maps.Marker({
+        position: markerLatLng,
+        map: map,
+        title: title,
+        icon: 'http://yohman.bol.ucla.edu/images/yelp.png'
+    });
+
+    //add an onclick event
+    google.maps.event.addListener(yelp[i], 'click', function() {
+        infowindow_yelp.setContent(infowindowcontent);
+        infowindow_yelp.open(map,yelp[i]);
+    });
+}
+
+
+
+
+
+
+
+
+  google.maps.event.addDomListener(window, 'load', yoh.initialize);
 
   </script>
 </head>
-<body bgcolor="#accbe8">
+
+<body bgcolor="#accbe8" onload = "yoh.initialize()">
     <nav class="navbar navbar-default navbar-fixed-top" style = "margin-bottom: 2cm; background: #6ab47b; border-color: #599a68">
       <div class = "container">
         <h1><b id="site-title" style="display:none">Birdee   </b> <small><i id="site-slogan" style="display:none">  travel made easy</i></small></h1>
@@ -217,18 +266,18 @@
     <span class="dropdown center" style="display:inline">
       <select name="What are you looking for?" id="selected">
         <option selected = "selected">I'm looking for ... </option>
-        <option value="lodging" label = "Lodging">Lodging</option>
-        <option value="food" label = "Food">Food</option>
-        <option value="airport" label = "Airport">Airport</option>
-        <option value="hotel" label = "Hotel">Hotel</option>
-        <option value="atm" label = "ATM">ATM</option>
-        <option value="bank" label = "Bank">Bank</option>
-        <option value="bus_station" label = "Bus Station">Bus Station</option>
-        <option value="taxi_stand" label = "Taxi">Taxi</option>
-        <option value="train_stand" label = "Train">Train</option>
-        <option value="cafe" label = "Cafe">Cafe</option>
-        <option value="gas_station" label = "Gas Station">Gas Station</option>
-        <option value="clothing_store" label = "Clothing">Clothing</option>
+        <option value="Lodging" label = "Lodging">Lodging</option>
+        <option value="Food" label = "Food">Food</option>
+        <option value="Airport" label = "Airport">Airport</option>
+        <option value="Hotel" label = "Hotel">Hotel</option>
+        <option value="ATM" label = "ATM">ATM</option>
+        <option value="Bank" label = "Bank">Bank</option>
+        <option value="Bus Station" label = "Bus Station">Bus Station</option>
+        <option value="Taxi" label = "Taxi">Taxi</option>
+        <option value="Train" label = "Train">Train</option>
+        <option value="Cafe" label = "Cafe">Cafe</option>
+        <option value="Gas Station" label = "Gas Station">Gas Station</option>
+        <option value="Clothing" label = "Clothing">Clothing</option>
       </select>
     </span>
     <span class="dropdown center" style="display:inline">
@@ -286,21 +335,21 @@
       }
 
       function addInfo(place) {
-      	var placeLoc = place.geometry.location;
-      	var temp = document.getElementById('result-list').innerHTML;
+        var placeLoc = place.geometry.location;
+        var temp = document.getElementById('result-list').innerHTML;
 
-      	var html = 
+        var html = 
         "<div class = 'result'>" +
-      		"<h2>" + place.name + "</h2>" +
-      		"<table style = 'width: 100%'>" +
-      			"<tr>" +
-      				"<td>Hello!</td>" +
+          "<h2>" + place.name + "</h2>" +
+          "<table style = 'width: 100%'>" +
+            "<tr>" +
+              "<td>Hello!</td>" +
               "<td>Bye!</td>"
-      			"</tr>" +
-      		"</table>" +
+            "</tr>" +
+          "</table>" +
          "</div>" ;
 
-      	document.getElementById('result-list').innerHTML = temp + html;
+        document.getElementById('result-list').innerHTML = temp + html;
       }
 
       function createMarker(place) {
@@ -326,28 +375,6 @@
         });
         marker.setMap(map);
 
-        /*var id_request = {
-          placeId: place.placeId;
-        }
-
-        service = new google.maps.places.PlacesService(map);
-        service.getDetails(id_request, callback);*/
-
-        //var location = String(place.geometry.location);
-        //var ary = location.split(/(|)/);
-
-/*
-        // This event expects a click on a marker
-        // When this event is fired the Info Window is opened.
-        google.maps.event.addListener(marker, 'click', function() {
-          infowindow.open(map,marker);
-        });
-
-        // Event that closes the Info Window with a click on the map
-        google.maps.event.addListener(map, 'click', function() {
-          infowindow.close();
-        });*/
-
         var contentString = '<div id="iw-container" class="gm-style-iw" style="margin-top:0.37em;margin-bottom:0.37em">'
           + '<h1 class="iw-title" style="font-size:90%"><b>'+place.name+'</b></h1>'
           +'<div class="iw-content"><p style="margin-top:0.37em;margin-bottom:0.37em"><b>Address: </b>'+place.vicinity+'</p>'
@@ -355,14 +382,7 @@
          // +'<p style="display:none" id="selected-address" value=<code>place.vicinity</code>>'+place.formatted_address+'</p>'
           +'<ul id = "button-menu">'
           +'<li><input type="button" style="display: inline" id="directionsBtn" value="Directions" class="btn btn-success btn-sm" onclick="calcRoute(directionsService, directionsDisplay)"></li></div></div>'
-          +'<div class="iw-bottom-gradient"></div></div>'; //semicolon added
-      //+'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Reviews: </b>'+review(place)+</p>'
-        //  +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Place ID: </b>'+place.place_id+'</p></div>';
-        //  +'<p style="margin-top:0.37em;margin-bottom:0.37em;text-alignment:center"><a href = "https://maps.google.com?saddr=Current+Location&daddr='+ary[2]+'">Click for Directions</a></p></div>';
-
-        /*  document.getElementById("directionsBtn").addEventListener("click", function(){
-            calcRoute();
-          });*/
+          +'<div class="iw-bottom-gradient"></div></div>'; 
 
           google.maps.event.addListener(marker, 'click', function() {
           //google.maps.event.addListener(infowindow, 'domready', function() {
