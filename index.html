@@ -8,6 +8,8 @@
   <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
   <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
   <link href="css/extra.css" rel="stylesheet" media="screen">
+  <script type="text/javascript" src="http://oauth.googlecode.com/svn/code/javascript/oauth.js"></script>
+  <script type="text/javascript" src="http://oauth.googlecode.com/svn/code/javascript/sha1.js"></script>
   <style>
   html, body {
     height: 100%;
@@ -74,7 +76,8 @@
       
       /*search(x, y); */
 
-      yoh.getYelp(x);
+     /* yoh.getYelp(x); */
+      authenticate(x);
 
     });
   /*  $(".close").click(function(){ //close method closes alert message
@@ -104,9 +107,9 @@
     }
   }
 
-  yoh.initialize = function(){
+  function initialize() {
     //directionsDisplay = new google.maps.DirectionsRenderer;
-
+    bounds = new google.maps.LatLngBounds();
 
     directionsDisplay = new google.maps.DirectionsRenderer();
     directionsService = new google.maps.DirectionsService();
@@ -171,7 +174,87 @@
     map.setCenter(options.position);
   }
 
-  function calcRoute(directionsService, directionsDisplay) {
+  function authenticate(term) {
+    var url = "http://api.yelp.com/v2/search";
+    var method = "GET";
+    var accessor = {
+      token: "RBEZ5dknjTvj40dKDoTAkhdPQSp2oi51",
+      tokenSecret: "LgyHnOuliXVr2mte1Y9p1dmtF0I",
+      consumerKey : "2kwa_4JCIn9-rK4iiJ6_VA",
+      consumerSecret: "rL_R0BqJJVBd9BK83obKFWy6GIc"
+    };
+
+    var terms = term;
+    var near = map.getCenter().lat()+','+map.getCenter().lng();
+
+
+    parameters = [];
+    parameters.push(['term', terms]);
+    parameters.push(['ll', near]);
+    parameters.push(['callback', 'cb']);
+    parameters.push(['oauth_consumer_key', accessor.consumerKey]);
+    parameters.push(['oauth_consumer_secret', accessor.consumerSecret]);
+    parameters.push(['oauth_token', accessor.token]);
+    parameters.push(['oauth_signature_method', 'HMAC-SHA1']);
+    var message = {
+      'action':'http://api.yelp.com/v2/search',
+      'method': 'GET',
+      'parameters': parameters
+    }
+
+    OAuth.setTimestampAndNonce(message);
+    OAuth.SignatureMethod.sign(message, accessor); 
+    var parameterMap = OAuth.getParameterMap(message.parameters);
+    parameterMap.oauth_signature = OAuth.percentEncode(parameterMap.oauth_signature)
+    console.log(parameterMap);
+
+    $.ajax({
+      'url' : message.action,
+      'data' : parameterMap, 
+      'cache' : true,
+      'dataType' : 'jsonp',
+      'jsonpCallback' : 'cb',
+      'success' : function(data, textStats, XMLHttpRequest) {
+        console.log(data);
+           $.each(data.businesses, function(i,item){
+              infowindowcontent = '<strong>'+item.name+'</strong><br>';
+              infowindowcontent += '<img src="'+item.photo_url+'"><br>';
+              infowindowcontent += '<a href="'+item.url+'" target="_blank">see it on yelp</a>';
+                
+              createYelpMarker(i,item.latitude,item.longitude,item.name, infowindowcontent);
+            });                 
+      }
+    })
+  }
+
+  function createYelpMarker(i,latitude,longitude,title, infowindowcontent) {
+      var markerLatLng = new google.maps.LatLng(latitude,longitude);  
+      
+      //extent bounds for each stop and adjust map to fit to it
+    /*  bounds.extend(markerLatLng);
+      map.fitBounds(bounds);*/
+
+      yelp[i] = new google.maps.Marker({
+          position: markerLatLng,
+          map: map,
+          title: title,
+          icon: 'http://yohman.bol.ucla.edu/images/yelp.png'
+      });
+
+      yelp[i].setMap(map);
+
+      //add an onclick event
+      google.maps.event.addListener(yelp[i], 'click', function() {
+          infowindow_yelp.setContent(infowindowcontent);
+          infowindow_yelp.open(map,yelp[i]);
+
+          dest = marker.position; 
+          destPlace = place;
+      });
+  }
+
+
+ /* function calcRoute(directionsService, directionsDisplay) {
     var start = pos;
     var end = dest;
 
@@ -194,11 +277,11 @@
     google.maps.event.addListener(map, 'click', function() {
       document.getElementById("right-panel").style.display = "none";
     });
-  }
+  } */
 
 
 
-
+/*
   yoh.getYelp = function(term) {
     bounds = new google.maps.LatLngBounds();
     $.getJSON('http://api.yelp.com/business_review_search?lat='+map.getCenter().lat()+'&long='+map.getCenter().lng()+'&limit=20&ywsid=2kwa_4JCIn9-rK4iiJ6_VA&term='+term+'&callback=?',
@@ -213,8 +296,9 @@
             });                 
         }
     );
-  }
+  } */
 
+/*
   //Function to create yelp marker
 yoh.createYelpMarker = function(i,latitude,longitude,title, infowindowcontent)
 {
@@ -238,19 +322,19 @@ yoh.createYelpMarker = function(i,latitude,longitude,title, infowindowcontent)
     });
 }
 
+*/
 
 
 
 
 
 
-
-  google.maps.event.addDomListener(window, 'load', yoh.initialize);
+  google.maps.event.addDomListener(window, 'load', initialize);
 
   </script>
 </head>
 
-<body bgcolor="#accbe8" onload = "yoh.initialize()">
+<body bgcolor="#accbe8" onload = "initialize()">
     <nav class="navbar navbar-default navbar-fixed-top" style = "margin-bottom: 2cm; background: #6ab47b; border-color: #599a68">
       <div class = "container">
         <h1><b id="site-title" style="display:none">Birdee   </b> <small><i id="site-slogan" style="display:none">  travel made easy</i></small></h1>
@@ -300,7 +384,7 @@ yoh.createYelpMarker = function(i,latitude,longitude,title, infowindowcontent)
       var dest;
       var destPlace;
 
-      function search(text, rad) {
+    /*  function search(text, rad) {
         var mapOptions = {
           zoom: 15
         };
@@ -332,9 +416,9 @@ yoh.createYelpMarker = function(i,latitude,longitude,title, infowindowcontent)
         else {
           handleNoGeolocation(false);
         }
-      }
+      } */
 
-      function addInfo(place) {
+     /* function addInfo(place) {
         var placeLoc = place.geometry.location;
         var temp = document.getElementById('result-list').innerHTML;
 
@@ -350,9 +434,9 @@ yoh.createYelpMarker = function(i,latitude,longitude,title, infowindowcontent)
          "</div>" ;
 
         document.getElementById('result-list').innerHTML = temp + html;
-      }
+      } */
 
-      function createMarker(place) {
+    /*  function createMarker(place) {
         var placeLoc = place.geometry.location;
 
         var image = {
@@ -367,10 +451,6 @@ yoh.createYelpMarker = function(i,latitude,longitude,title, infowindowcontent)
           map: map,
           position: place.geometry.location,
           icon: image,
-          /*place: {
-            placeId: place.place_id,
-            location: place.geometry.location
-          }*/
           placeId: place.place_id
         });
         marker.setMap(map);
@@ -379,39 +459,28 @@ yoh.createYelpMarker = function(i,latitude,longitude,title, infowindowcontent)
           + '<h1 class="iw-title" style="font-size:90%"><b>'+place.name+'</b></h1>'
           +'<div class="iw-content"><p style="margin-top:0.37em;margin-bottom:0.37em"><b>Address: </b>'+place.vicinity+'</p>'
           +'<p style="margin-top:0.37em;margin-bottom:0.37em"><b>Rating: </b>'+place.rating+'/5.0</p>'
-         // +'<p style="display:none" id="selected-address" value=<code>place.vicinity</code>>'+place.formatted_address+'</p>'
           +'<ul id = "button-menu">'
           +'<li><input type="button" style="display: inline" id="directionsBtn" value="Directions" class="btn btn-success btn-sm" onclick="calcRoute(directionsService, directionsDisplay)"></li></div></div>'
           +'<div class="iw-bottom-gradient"></div></div>'; 
 
           google.maps.event.addListener(marker, 'click', function() {
-          //google.maps.event.addListener(infowindow, 'domready', function() {
           infowindow.setContent(contentString);
-          dest = marker.position; //fishy
+          dest = marker.position; 
           destPlace = place;
 
           infowindow.open(map, this);
         });
-      }
+      } */
 
-      function review() {
-        /*var reviewString='';
-        for(var i = 0; i < place.reviews.length; i++) {
-          reviewString+=place.reviews[i].text + '<br><br>';
-        }
-        document.getElementById("review-page").innerHTML =
-          '<h3>'+place.name+'</h3>'
-          +'<br><br>'+reviewString;*/
+    /*  function review() {
         document.getElementById("review-page").style.display = "inline";
         window.alert("Accessed review function");
         google.maps.event.addListener(map, 'click', function() {
           document.getElementById("review-page").style.display = "none";
         });
-        //document.getElementById("review-page").innerHTML = 'The place is ' + place.name;
-        //return reviewString;
-      }
+      } */
 
-      function callback(results, status) {
+     /* function callback(results, status) {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
           if(results.length==0)
             window.alert("No results were found. Please try a larger radius or a different service type.");
@@ -428,7 +497,7 @@ yoh.createYelpMarker = function(i,latitude,longitude,title, infowindowcontent)
             });
           }
         }
-      }
+      } */
 
 
       function loadScript() {
