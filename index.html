@@ -218,10 +218,13 @@
         console.log(data);
            $.each(data.businesses, function(i,item){
               infowindowcontent = '<strong>'+item.name+'</strong><br>';
-              infowindowcontent += '<img src="'+item.photo_url+'"><br>';
+              infowindowcontent += '<img src="'+item.image_url+'"><br>';
               infowindowcontent += '<a href="'+item.url+'" target="_blank">see it on yelp</a>';
                 
-              createYelpMarker(i,item.latitude,item.longitude,item.name, infowindowcontent);
+              createYelpMarker(i,item.location.coordinate.latitude,item.location.coordinate.longitude,item.name, infowindowcontent);
+
+              addInfo(item);
+
             });                 
       }
     })
@@ -231,8 +234,8 @@
       var markerLatLng = new google.maps.LatLng(latitude,longitude);  
       
       //extent bounds for each stop and adjust map to fit to it
-    /*  bounds.extend(markerLatLng);
-      map.fitBounds(bounds);*/
+      bounds.extend(markerLatLng);
+      map.fitBounds(bounds);
 
       yelp[i] = new google.maps.Marker({
           position: markerLatLng,
@@ -251,6 +254,26 @@
           dest = marker.position; 
           destPlace = place;
       });
+
+      alert("inside");
+  }
+
+  function addInfo(item) {
+
+        var temp = document.getElementById('result-list').innerHTML;
+
+        var html = 
+        "<div class = 'result'>" +
+          "<h2>" + item.name + "</h2>" +
+          "<table style = 'width: 100%'>" +
+            "<tr>" +
+              "<td>" + item.location.coordinate.latitude + "</td>"
+              "<td>" + item.location.coordinate.longitude + "</td>"
+            "</tr>" +
+          "</table>" +
+         "</div>" ;
+
+        document.getElementById('result-list').innerHTML = temp + html;
   }
 
 
