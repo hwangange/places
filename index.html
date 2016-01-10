@@ -68,6 +68,7 @@
   /*    $('#selection').innerHTML() = x;
       $('#location-selection').innerHTML() = "Sugar Land"; */
       $('#map-canvas').css('width','50vw');
+      $('#map-canvas').css('max-width', '50vw');
       $('#map-canvas').css('z-index','1');
       //var x = $("#selected").val();
 
@@ -128,11 +129,6 @@
         pos = new google.maps.LatLng(position.coords.latitude,
           position.coords.longitude);
 
-          /*var request = {
-          location: pos,
-          radius: 1000,
-          types: ['store']
-        };*/
         map.setCenter(pos);
         var marker=new google.maps.Marker({
           position:pos,
@@ -251,11 +247,12 @@
           infowindow_yelp.setContent(infowindowcontent);
           infowindow_yelp.open(map,yelp[i]);
 
+          map.panTo(yelp[i].position);
+
           dest = marker.position; 
           destPlace = place;
       });
 
-      alert("inside");
   }
 
   function addInfo(item) {
@@ -265,13 +262,11 @@
         var html = 
         "<div class = 'result'>" +
           "<h2>" + item.name + "</h2>" +
-          "<table style = 'width: 100%'>" +
-            "<tr>" +
-              "<td>" + item.location.coordinate.latitude + "</td>"
-              "<td>" + item.location.coordinate.longitude + "</td>"
-            "</tr>" +
-          "</table>" +
-         "</div>" ;
+          "<p>" + item.categories[0][0] + "</p>" +
+          "<p>" + item.location.address + "</p>" +
+          "<p>" + item.snippet_text + "</p>" +
+         "</div>" + 
+         "<div class = 'divider'></div>" ;
 
         document.getElementById('result-list').innerHTML = temp + html;
   }

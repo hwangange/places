@@ -132,7 +132,16 @@ ul#button-menu li {
   font-size: 150%;
 }
 
+.result p{
+  padding: 0;
+  margin: 0;
+}
 
+#result-list .divider {
+  margin: 10px;
+  height: 1px;
+  background-color: black;
+}
 /****RIGHT PANEL ****/
 
 #right-panel select, #right-panel input {
