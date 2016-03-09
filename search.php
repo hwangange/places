@@ -245,6 +245,10 @@
 
           var temp = document.getElementById('result-list').innerHTML;
           var tempItem = item;
+
+          <?php 
+
+          ?>
           
 
           var html = 
@@ -254,13 +258,17 @@
             "<p>" + item.location.address + "</p>" +
             "<p>" + item.snippet_text + "</p>" +
             "<form action = '' method = 'GET'>" +
-              "<a href = 'review.php?q=" + item.id + "&name=" + item.name + "&image=" + item.image_url + "&displayphone=" + item.display_phone + "&phone=" + item.phone + "&categories=" + item.categories[0][0] + "&rating=" + item.rating + "&ratingimg=" + item.rating_img_url + "&address=" + item.location.address + "&latitude=" + item.location.coordinate.latitude + "&longitude=" + item.location.coordinate.longitude + "&url=" + item.url + "'><input value = 'View' class = 'btn btn-success btn-sm'></a>" +
+              "<a href = 'review.php?q=" + item.id + "&name=" + htmlEntities(item.name) + "&image=" + htmlEntities(item.image_url) + "&displayphone=" + item.display_phone + "&phone=" + item.phone + "&categories=" + item.categories[0][0] + "&rating=" + item.rating + "&ratingimg=" + item.rating_img_url + "&address=" + item.location.address + "&latitude=" + item.location.coordinate.latitude + "&longitude=" + item.location.coordinate.longitude + "&url=" + item.url + "'><input value = 'View' class = 'btn btn-success btn-sm'></a>" +
             "</form>" +
            "</div>" + 
            "<div class = 'divider'></div>" ;
 
           document.getElementById('result-list').innerHTML = temp + html;
           
+    }
+
+    function htmlEntities(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
     }
 
     function review(temp) {

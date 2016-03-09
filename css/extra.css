@@ -29,6 +29,16 @@ body {
   line-height: 0.8em;
 }
 
+#loginNav {
+  margin-top: 10px;
+}
+
+.profile {
+  width: 10px;
+  height: 10px;
+  resize: both;
+}
+
 small {
   font-size: 1.5em;
 }
@@ -51,8 +61,8 @@ h4 {
 }
 
 
-nav a {
-  text-decoration: none;
+a {
+  text-decoration: none !important;
   color: black;
 }
 
@@ -306,6 +316,20 @@ span.customStyleSelectBox.changed {
 } */
 
 /****** REVIEW PAGE ********/
+
+.green {
+
+}
+
+.white {
+  background: white;
+  padding: 50px;
+  padding-top: 25px;
+  margin: 2.5%;
+  margin-top: 100px;
+  
+}
+
 .divider {
   border: 0;
   height: 3px;
@@ -324,4 +348,23 @@ span.customStyleSelectBox.changed {
 
 #reviews h6 {
   margin-top: none;
+}
+
+.rev {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 20px;
+  background: #c3e1ca;
+  border-color: #599a68;
+}
+
+.rev p {
+  margin-top: 10px;
+  padding: 5px;
+  background: white;
+}
+
+.reviewbio {
+  margin: 5px;
+  padding: 3px;
 }

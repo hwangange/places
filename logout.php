@@ -2,7 +2,15 @@
 	session_start();
 	if(session_destroy())
 	{
-		header('Location: ' . $_SERVER['HTTP_REFERER']);
-		exit;
+		if(strpos($_SERVER['HTTP_REFERER'], "profile.php") !==false)
+		{
+			header('Location: index.php');
+			exit;
+		}
+		else
+		{
+			header('Location: ' . $_SERVER['HTTP_REFERER']);
+			exit;
+		}
 	}
 ?>

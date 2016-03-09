@@ -2,8 +2,8 @@
       <ul class = "nav navbar-nav navbar-left">
         <li><h1><a href = "index.php"><b id="site-title" style="display:none">Birdee   </b></a> <small><i id="site-slogan" style="display:none">  travel made easy</i></small></h1></li>
       </ul>
-      <ul class = "nav navbar-nav navbar-right">
-        <li>
+      <ul class = "nav navbar-nav navbar-right loginNav">
+      
 
           <?php
             $db_host = "localhost";
@@ -13,6 +13,18 @@
           
             $conn = mysqli_connect("$db_host","$db_username","$db_pass","$db_name") or die ("could not connect to mysql");
 
+           
+              if(isset($_SESSION['login_user']))
+              {
+                $username = $_SESSION['login_user'];
+                $sql = "SELECT * FROM login WHERE username = '" . $username . "'";
+                $result = mysqli_query($conn, $sql);
+                /* fetch associative array */
+                $row = $result->fetch_row();
+                $profilepath =  $row[2];
+                
+              }
+                
              if(isset($_POST['registerSubmit'])) {
               if(!$_POST['username'] | !$_POST['password']) {
                 die('Please complete the entire form.');
@@ -40,11 +52,11 @@
                 $username = $_POST['username'];
               }
 
-              $sql = "INSERT INTO login (username, password)
-              VALUES ('$username', '$password')";
+              $sql = "INSERT INTO login (username, password, profile)
+              VALUES ('$username', '$password', 'img/default.jpg')";
 
               if ($conn->query($sql) === TRUE) {
-                  
+                  echo "<p style = 'margin-top: 5cm'>Thank you for registering.</p>";
                   exit;
               } else {
                   echo "Error: " . $sql . "<br>" . $conn->error;
@@ -76,33 +88,68 @@
               if($existCount == 0) { 
                 die('Sorry, the username and password do not match.');
               } else {
+
+
+                $sql = "SELECT * FROM login WHERE username = '" . $username . "'";
+                $result = mysqli_query($conn, $sql);
+                /* fetch associative array */
+                $row = $result->fetch_row();
+                $profilepath =  $row[2];
                 $_SESSION['login_user'] = $username;
+                
                
                 
               }
 
               unset($db);
           ?>
-          <h3><small>Welcome </small><a href = "profile.php"> <?php echo $_SESSION['login_user']; ?></a><a href = "logout.php"><small> Logout</small></a></h3>
+          <!--<li><h3><small>Welcome </small><a href = "profile.php"> <?php //echo $_SESSION['login_user']; ?></a><a href = "logout.php"><small> Logout</small></a></h3></li> -->
+          <li>
+            <div class = "btn-group" style = "margin-top: 10px">
+            <a class = "btn dropdown-toggle" data-toggle = "dropdown" href = "#">
+              <img class = "profilepicture" width = "20px" height = "20px" src = "<?php echo $profilepath; ?>">
+              <?php echo $_SESSION['login_user'];?>
+              <span class = "caret"></span>
+            </a>
+            <ul class = "dropdown-menu">
+              <li><a href = "profile.php?q='"+<?php echo $_SESSION['login_user'];?>+"'">Profile</a></li>
+              <li><a href = "logout.php">Log Out</a></li>
+            </ul>
+            </div>
+          </li>
 
           <?php 
         }
 
         else if (!isset($_SESSION['login_user']))
         { ?>
-            <button class = 'btn btn-primary' data-toggle = 'modal' data-target = '#loginModal'>Login</button> <span id 'registerLink'> or <a data-toggle = 'modal' data-target = '#registerModal'>Register</a></span>
+           <li id = "loginNav"><span><button class = "btn btn-primary" data-toggle = 'modal' data-target = '#loginModal'>Login</button> or <a data-toggle = 'modal' data-target = '#registerModal'>Register</a></span></li>
        <?php }
 
         else {
          ?>
-          <h3><small>Welcome </small><a href = "profile.php"> <?php echo $_SESSION['login_user']; ?></a><a href = "logout.php"><small> Logout</small></a></h3>
+          <!--<li><h3><small>Welcome </small><a href = "profile.php"> <?php //echo $_SESSION['login_user']; ?></a><a href = "logout.php"><small> Logout</small></a></h3></li> -->
+
+          <li>
+            <div class = "btn-group" style = "margin-top: 10px">
+            <a class = "btn dropdown-toggle" data-toggle = "dropdown" href = "#">
+              <img class = "profilepicture" width = "20px" height = "20px" src = "<?php echo $profilepath; ?>">
+              <?php echo $_SESSION['login_user'];?>
+              <span class = "caret"></span>
+            </a>
+            <ul class = "dropdown-menu">
+              <li><a href = "profile.php?q='"+<?php echo $_SESSION['login_user'];?>+"'">Profile</a></li>
+              <li><a href = "logout.php">Log Out</a></li>
+            </ul>
+            </div>
+          </li>
 
           <?php 
         }
         ?>
 
 
-        </li>
+        
       </ul>
     </nav>
 
@@ -114,7 +161,7 @@
               <h3 class="modal-title" id="myModalLabel">Login</h3>
            </div>
            <div class="modal-body">
-              <form id = "loginForm" action = "<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method = "post">
+              <form id = "loginForm" action = "<?php echo htmlspecialchars($_SERVER['REQUEST_URI']) ?>" method = "post">
                 <fieldset>
                   <div align = "center" style = "margin-bottom: 5px"> Username: <input type = "text" id = "username" name = "username" /> </div>
                   <div align = "center" style = "margin-bottom: 5px"> Password: <input type = "password" id = "password" name = "password" /> </div>
@@ -138,7 +185,7 @@
               <h3 class="modal-title" id="myModalLabel">Register</h3>
            </div>
            <div class="modal-body">
-              <form id = "loginForm" action = "<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method = "post">
+              <form id = "loginForm" action = "<?php echo htmlspecialchars($_SERVER['REQUEST_URI']) ?>" method = "post">
                 <fieldset>
                   <div align = "center" style = "margin-bottom: 5px"> Username: <input type = "text" id = "username" name = "username" /> </div>
                   <div align = "center" style = "margin-bottom: 5px"> Password: <input type = "password" id = "password" name = "password" /> </div>
